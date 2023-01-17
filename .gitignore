@@ -1,0 +1,18 @@
+# No Ignore
+!compile_flags.txt
+!CMakeLists.txt
+
+# Extensions
+*.out
+*.o
+*.cmake
+*.txt
+
+# Folders
+bin
+obj
+Testing
+CMakeFiles
+
+# Files
+Makefile

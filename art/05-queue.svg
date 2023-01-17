@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="115mm"
+   viewBox="0 0 210 115"
+   version="1.1"
+   id="svg907"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   sodipodi:docname="05-queue.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview909"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1"
+     inkscape:cx="662"
+     inkscape:cy="411"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     showguides="false" />
+  <defs
+     id="defs904" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="base" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="arrows">
+    <path
+       sodipodi:type="star"
+       style="fill:#7f7f7f;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.387001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path1535"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="126.63284"
+       sodipodi:cy="79.926903"
+       sodipodi:r1="5.2332745"
+       sodipodi:r2="2.6166379"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 126.63284,74.693628 2.26608,3.924956 2.26607,3.924956 -4.53215,1e-6 -4.53215,-1e-6 2.26608,-3.924956 z"
+       inkscape:transform-center-y="-0.44201158"
+       transform="matrix(0.33784722,0,0,0.33784722,-1.5375226,79.840727)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7f7f7f;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.387001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path1657"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="126.63284"
+       sodipodi:cy="79.926903"
+       sodipodi:r1="5.2332745"
+       sodipodi:r2="2.6166379"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 126.63284,74.693628 2.26608,3.924956 2.26607,3.924956 -4.53215,1e-6 -4.53215,-1e-6 2.26608,-3.924956 z"
+       inkscape:transform-center-y="-0.44201158"
+       transform="matrix(0.33784722,0,0,0.33784722,-18.49693,79.840727)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#7f7f7f;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.387001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path1661"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="126.63284"
+       sodipodi:cy="79.926903"
+       sodipodi:r1="5.2332745"
+       sodipodi:r2="2.6166379"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 126.63284,74.693628 2.26608,3.924956 2.26607,3.924956 -4.53215,1e-6 -4.53215,-1e-6 2.26608,-3.924956 z"
+       inkscape:transform-center-y="-0.44201071"
+       transform="matrix(0.33784722,0,0,0.33784722,-18.49693,35.285968)" />
+  </g>
+  <g
+     inkscape:label="objects"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect234"
+       width="16.266552"
+       height="16.266552"
+       x="16.152346"
+       y="4.6429114"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect344"
+       width="16.266552"
+       height="16.266552"
+       x="33.047791"
+       y="4.6429114"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect346"
+       width="16.266552"
+       height="16.266552"
+       x="49.965656"
+       y="4.6429114"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect348"
+       width="16.266552"
+       height="16.266552"
+       x="66.812553"
+       y="4.6429114"
+       ry="0.73714298" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path1178"
+       cx="8.2685871"
+       cy="12.776188"
+       r="3.7717922" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="circle1234"
+       cx="121.61707"
+       cy="79.75489"
+       r="3.2185805" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1262"
+       width="16.266552"
+       height="16.266552"
+       x="16.152346"
+       y="38.70649"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1264"
+       width="16.266552"
+       height="16.266552"
+       x="33.047791"
+       y="38.70649"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1266"
+       width="16.266552"
+       height="16.266552"
+       x="49.965656"
+       y="38.70649"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1268"
+       width="16.266552"
+       height="16.266552"
+       x="66.812553"
+       y="38.70649"
+       ry="0.73714298" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="circle1270"
+       cx="8.2685871"
+       cy="46.839767"
+       r="3.7717922" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1537"
+       width="16.266552"
+       height="16.266552"
+       x="16.152346"
+       y="82.504852"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1539"
+       width="16.266552"
+       height="16.266552"
+       x="33.047791"
+       y="82.504852"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1541"
+       width="16.266552"
+       height="16.266552"
+       x="49.965656"
+       y="82.504852"
+       ry="0.73714298" />
+    <rect
+       style="fill:none;stroke:#7f7f7f;stroke-width:0.308214;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1543"
+       width="16.266552"
+       height="16.266552"
+       x="66.812553"
+       y="82.504852"
+       ry="0.73714298" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="circle1545"
+       cx="8.2685871"
+       cy="90.63813"
+       r="3.7717922" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="circle1629"
+       cx="121.61707"
+       cy="90.786613"
+       r="3.2185805" />
+    <circle
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="circle1639"
+       cx="121.61707"
+       cy="103.87029"
+       r="3.2185805" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.185;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1792"
+       width="66.358925"
+       height="54.522274"
+       x="128.68289"
+       y="4.8163223"
+       ry="1.4777173" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="text">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.937023"
+       y="25.568945"
+       id="text958"><tspan
+         sodipodi:role="line"
+         id="tspan956"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.937023"
+         y="25.568945">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.753792"
+       y="25.523794"
+       id="text1068"><tspan
+         sodipodi:role="line"
+         id="tspan1066"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.753792"
+         y="25.523794">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.763817"
+       y="25.568747"
+       id="text1072"><tspan
+         sodipodi:role="line"
+         id="tspan1070"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.763817"
+         y="25.568747">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.626457"
+       y="25.523794"
+       id="text1076"><tspan
+         sodipodi:role="line"
+         id="tspan1074"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.626457"
+         y="25.523794">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.501534"
+       y="14.827188"
+       id="text1096"><tspan
+         sodipodi:role="line"
+         id="tspan1094"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.501534"
+         y="14.827188">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.512169"
+       y="14.855285"
+       id="text1100"><tspan
+         sodipodi:role="line"
+         id="tspan1098"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.512169"
+         y="14.855285">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.449707"
+       y="14.799091"
+       id="text1104"><tspan
+         sodipodi:role="line"
+         id="tspan1102"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.449707"
+         y="14.799091">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.355614"
+       y="14.827188"
+       id="text1124"><tspan
+         sodipodi:role="line"
+         id="tspan1122"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.355614"
+         y="14.827188">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="7.1137314"
+       y="14.114354"
+       id="text1182"><tspan
+         sodipodi:role="line"
+         id="tspan1180"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251365"
+         x="7.1137314"
+         y="14.114354">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="120.6316"
+       y="80.896774"
+       id="text1238"><tspan
+         sodipodi:role="line"
+         id="tspan1236"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214498"
+         x="120.6316"
+         y="80.896774">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="127.49095"
+       y="80.700241"
+       id="text1254"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="127.49095"
+         y="80.700241"
+         id="tspan1706">We have an empty queue</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.937023"
+       y="59.632519"
+       id="text1274"><tspan
+         sodipodi:role="line"
+         id="tspan1272"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.937023"
+         y="59.632519">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.753792"
+       y="59.587368"
+       id="text1278"><tspan
+         sodipodi:role="line"
+         id="tspan1276"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.753792"
+         y="59.587368">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.763817"
+       y="59.632317"
+       id="text1282"><tspan
+         sodipodi:role="line"
+         id="tspan1280"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.763817"
+         y="59.632317">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.626457"
+       y="59.587368"
+       id="text1286"><tspan
+         sodipodi:role="line"
+         id="tspan1284"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.626457"
+         y="59.587368">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.501534"
+       y="48.890762"
+       id="text1290"><tspan
+         sodipodi:role="line"
+         id="tspan1288"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.501534"
+         y="48.890762">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.512169"
+       y="48.918854"
+       id="text1294"><tspan
+         sodipodi:role="line"
+         id="tspan1292"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.512169"
+         y="48.918854">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.449707"
+       y="48.862667"
+       id="text1298"><tspan
+         sodipodi:role="line"
+         id="tspan1296"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.449707"
+         y="48.862667">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.355614"
+       y="48.890762"
+       id="text1302"><tspan
+         sodipodi:role="line"
+         id="tspan1300"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.355614"
+         y="48.890762">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="7.1137314"
+       y="48.177925"
+       id="text1306"><tspan
+         sodipodi:role="line"
+         id="tspan1304"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251365"
+         x="7.1137314"
+         y="48.177925">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.937023"
+       y="103.43088"
+       id="text1549"><tspan
+         sodipodi:role="line"
+         id="tspan1547"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.937023"
+         y="103.43088">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.753792"
+       y="103.38574"
+       id="text1553"><tspan
+         sodipodi:role="line"
+         id="tspan1551"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.753792"
+         y="103.38574">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.763817"
+       y="103.43069"
+       id="text1557"><tspan
+         sodipodi:role="line"
+         id="tspan1555"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.763817"
+         y="103.43069">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.626457"
+       y="103.38574"
+       id="text1561"><tspan
+         sodipodi:role="line"
+         id="tspan1559"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.49534px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.626457"
+         y="103.38574">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="22.501534"
+       y="92.689133"
+       id="text1565"><tspan
+         sodipodi:role="line"
+         id="tspan1563"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="22.501534"
+         y="92.689133">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="39.512169"
+       y="92.717224"
+       id="text1569"><tspan
+         sodipodi:role="line"
+         id="tspan1567"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="39.512169"
+         y="92.717224">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="56.449707"
+       y="92.661041"
+       id="text1573"><tspan
+         sodipodi:role="line"
+         id="tspan1571"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="56.449707"
+         y="92.661041">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="73.355614"
+       y="92.689133"
+       id="text1577"><tspan
+         sodipodi:role="line"
+         id="tspan1575"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.61918px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="73.355614"
+         y="92.689133">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251367;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="7.1137314"
+       y="91.976295"
+       id="text1581"><tspan
+         sodipodi:role="line"
+         id="tspan1579"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.66621px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.251365"
+         x="7.1137314"
+         y="91.976295">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="20.058603"
+       y="110.48342"
+       id="text1585"><tspan
+         sodipodi:role="line"
+         id="tspan1583"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="20.058603"
+         y="110.48342">front</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="37.806091"
+       y="110.4831"
+       id="text1589"><tspan
+         sodipodi:role="line"
+         id="tspan1587"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="37.806091"
+         y="110.4831">rear</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52777px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:#7f7f7f;stroke-width:0.387001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="196.46962"
+       y="166.29799"
+       id="text1593"><tspan
+         sodipodi:role="line"
+         id="tspan1591"
+         style="stroke-width:0.387"
+         x="196.46962"
+         y="166.29799" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="88.71595"
+       y="12.031647"
+       id="text1597"><tspan
+         sodipodi:role="line"
+         id="tspan1595"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="12.031647">Front = -1</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="15.543647"
+         id="tspan1599">Rear  = -1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="88.71595"
+       y="46.095222"
+       id="text1605"><tspan
+         sodipodi:role="line"
+         id="tspan1601"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="46.095222">Front = 0</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="49.607224"
+         id="tspan1603">Rear  = 0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="88.71595"
+       y="89.907639"
+       id="text1627"><tspan
+         sodipodi:role="line"
+         id="tspan1623"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="89.907639">Front = 0</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="88.71595"
+         y="93.41964"
+         id="tspan1625">Rear  = 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="120.6316"
+       y="91.928497"
+       id="text1633"><tspan
+         sodipodi:role="line"
+         id="tspan1631"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214498"
+         x="120.6316"
+         y="91.928497">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="127.49084"
+       y="89.679688"
+       id="text1637"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="127.49084"
+         y="89.679688"
+         id="tspan1704">We increment both pointers since</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="127.49084"
+         y="93.976776"
+         id="tspan2697">queue is empty then we add 1 to rear</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="120.6316"
+       y="105.01215"
+       id="text1643"><tspan
+         sodipodi:role="line"
+         id="tspan1641"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.12847px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.214498"
+         x="120.6316"
+         y="105.01215">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="127.49095"
+       y="103.05556"
+       id="text1647"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="127.49095"
+         y="103.05556"
+         id="tspan1710">We just increment rear and then</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="127.49095"
+         y="107.35265"
+         id="tspan1838">we add 2 to rear</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="40.49165"
+       y="36.322132"
+       id="text1651"><tspan
+         sodipodi:role="line"
+         id="tspan1649"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="40.49165"
+         y="36.322132">enqueue(1)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="40.49165"
+       y="78.846565"
+       id="text1655"><tspan
+         sodipodi:role="line"
+         id="tspan1653"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="40.49165"
+         y="78.846565">enqueue(2)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="15.844216"
+       y="65.928673"
+       id="text1665"><tspan
+         sodipodi:role="line"
+         id="tspan1663"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.8096px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Bold';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="15.844216"
+         y="65.928673">front-rear</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.284665;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="120.99799"
+       y="41.229218"
+       id="text1683"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.284664"
+         x="120.99799"
+         y="41.229218"
+         id="tspan1689" /><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.284664"
+         x="120.99799"
+         y="45.197968"
+         id="tspan1687" /><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.284664"
+         x="120.99799"
+         y="49.166718"
+         id="tspan1685" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308215;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="137.98949"
+       y="13.993632"
+       id="text1714"><tspan
+         sodipodi:role="line"
+         id="tspan1712"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="13.993632">void enqueue(int val) {</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="18.290718"
+         id="tspan1716">    if is_empty() {</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="22.587807"
+         id="tspan1720">         front = 0;</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="26.884893"
+         id="tspan1724">         rear = 0;</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="31.181982"
+         id="tspan1738">         return;</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="35.479073"
+         id="tspan1728">    }</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="39.776157"
+         id="tspan1795" /><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="44.073246"
+         id="tspan1732">    rear++;</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="48.370335"
+         id="tspan1734">    queue[rear] = val;</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="52.667419"
+         id="tspan1736">}</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:3.43767px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono Medium';fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:0.308214"
+         x="137.98949"
+         y="56.964508"
+         id="tspan1718" /></text>
+  </g>
+</svg>
