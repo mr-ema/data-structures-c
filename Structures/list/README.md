@@ -23,7 +23,7 @@
     - [Singly List Deletion - Video](https://www.youtube.com/watch?v=ClvYytk5Rlg&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=12)
     - [Doubly List Insertion - Video](https://www.youtube.com/watch?v=v4szCPs9yEY&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=17)
     - [Doubly List Deletion - Video](https://www.youtube.com/watch?v=7yNUXcOcHwE&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=18)
-    - [Circular List Insertion video](https://www.youtube.com/watch?v=ReGglEXEH08&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=22)
+    - [Circular List Insertion - Video](https://www.youtube.com/watch?v=ReGglEXEH08&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=22)
     - [Circular List Deletion - Video](https://www.youtube.com/watch?v=EkE6RHuMx3I&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=23)
     - [Doubly Circular List Insertion - Video](https://www.youtube.com/watch?v=Fa958fGdgx0&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=26)
     - [Doubly Circular List Deletion - Video](https://www.youtube.com/watch?v=ElQxT6hDeNE&list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU&index=27)
@@ -467,7 +467,7 @@ int main()
 
     * THIS PROGRAM WILL TRY TO ACCESS ALREADY FREE MEMORY JUST FOR DEMONSTRATION PURPOSES.
     * YOU SHOULD NEVER DO THIS IN REAL PROGRAMS SINCE IT COULD CAUSE UNDEFINED BEHAVIOR.
-    * INTEAD YOU SHOULD USE A DEBUGGER LIKE VALGRIND. 
+    * INSTEAD YOU SHOULD USE A DEBUGGER LIKE VALGRIND. 
 **********************************************************************************************/
     
 #include <stdio.h>
