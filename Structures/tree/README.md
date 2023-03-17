@@ -28,6 +28,16 @@ A `general tree` data structure has no restriction on the number of nodes. It me
 A node of a `binary tree` can have a maximum of two child nodes. In the given tree diagram, node B, D, and F are left children, while E, C, and G are the right children.
 
 </br>
+
+<p  align="center">
+  <img
+    src="https://github.com/mr-ema/data-structures-c/blob/main/art/02-tree.svg"
+    alt="Binary Tree Graphical Representation"
+    title="Binary Tree Graphical Representation"
+    style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
+</p>
+
+</br>
 </br>
 
 ## Balanced Tree
