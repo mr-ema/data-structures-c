@@ -2,7 +2,7 @@
 #define TREE_H
 
 struct Node {
-        int key;
+        int Key;
         struct Node *Left;
         struct Node *Right;
 };
