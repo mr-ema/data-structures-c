@@ -14,6 +14,7 @@ I'm learning data structures and algorithms so here you can find some basic `C` 
 </br>
 
 ## Resources
+- _Visual Algo_ - Visualise Algorithms -> [_Visual Algo_](https://visualgo.net/en)
 - _Big-O_ - Time And Space Complexity -> [_Cheat Sheet_](https://www.bigocheatsheet.com/)
 - _Programiz_ - Simple C Compiler (Online) -> [_Programiz_](https://www.programiz.com/c-programming/online-compiler)
 - _Jenny's Lectures CS IT_ - Data Structures And Algorithms -> [_Youtube Playlist_](https://www.youtube.com/playlist?list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU)
