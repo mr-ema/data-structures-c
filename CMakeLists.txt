@@ -8,7 +8,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # Add Headers Files
 include_directories(include)
-include_directories(lib)
+# temporal form of include '/lib'
+include_directories(./)
 
 # Create List With Files To Test
 set(FILES
