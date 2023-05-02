@@ -7,7 +7,8 @@ enable_language(C)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # Add Headers Files
-include_directories(include) 
+include_directories(include)
+include_directories(lib)
 
 # Create List With Files To Test
 set(FILES
