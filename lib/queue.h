@@ -11,12 +11,14 @@ typedef struct {
         void* queue[MAX_ARRAY_SIZE];
 } queue_t;
 
-static inline void queue_init(queue_t *q) {
+static inline void queue_init(queue_t *q)
+{
         q->rear = -1;
         q->front = -1;
 }
 
-static inline int queue_is_empty(queue_t *q) {
+static inline int queue_is_empty(queue_t *q)
+{
         return (q->rear <= -1 && q->front <= -1);
 }
 
@@ -24,7 +26,8 @@ static inline int queue_is_full(queue_t *q) {
         return (q->rear >= MAX_ARRAY_SIZE - 1);
 }
 
-static inline int queue_len(queue_t *q) {
+static inline int queue_len(queue_t *q)
+{
         if (queue_is_empty(q)) {
                 return 0;
         }
@@ -32,7 +35,8 @@ static inline int queue_len(queue_t *q) {
         return (q->rear - q->front) + 1;
 }
 
-static inline void* queue_peek(queue_t *q) {
+static inline void* queue_peek(queue_t *q)
+{
         if (queue_is_empty(q)) {
                 return NULL;
         }
@@ -40,7 +44,8 @@ static inline void* queue_peek(queue_t *q) {
         return q->queue[q->front];
 }
 
-static inline void queue_enqueue(queue_t *q, void* value) {
+static inline void queue_enqueue(queue_t *q, void* value)
+{
         if (queue_is_full(q)) {
                 return;
         } else if (queue_is_empty(q)) {
@@ -50,7 +55,8 @@ static inline void queue_enqueue(queue_t *q, void* value) {
         q->queue[++q->rear] = value;
 }
 
-static inline void* queue_dequeue(queue_t *q) {
+static inline void* queue_dequeue(queue_t *q)
+{
         if (queue_is_empty(q)) {
                 return NULL;
         }
@@ -67,7 +73,8 @@ static inline void* queue_dequeue(queue_t *q) {
         return temp;
 }
 
-static inline void queue_display(queue_t *q) {
+static inline void queue_display(queue_t *q)
+{
         if (queue_is_empty(q)) {
                 printf("Queue Is Empty\n");
                 return;
