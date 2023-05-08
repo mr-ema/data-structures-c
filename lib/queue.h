@@ -5,6 +5,10 @@
 
 #include <stdio.h>
 
+/******************
+ * circular queue *
+ ******************/
+
 typedef struct {
         int rear;
         int front;
@@ -23,23 +27,24 @@ static inline int queue_is_empty(queue_t *q)
 }
 
 static inline int queue_is_full(queue_t *q) {
-        return (q->rear >= MAX_ARRAY_SIZE - 1);
+        return ((q->rear + 1) % MAX_ARRAY_SIZE == q->front);
 }
 
 static inline int queue_len(queue_t *q)
 {
-        if (queue_is_empty(q)) {
+        if (queue_is_empty(q))
                 return 0;
-        }
+
+        if (q->rear < q->front)
+                return (MAX_ARRAY_SIZE - q->front) + (q->rear + 1);
 
         return (q->rear - q->front) + 1;
 }
 
 static inline void* queue_peek(queue_t *q)
 {
-        if (queue_is_empty(q)) {
+        if (queue_is_empty(q))
                 return NULL;
-        }
 
         return q->queue[q->front];
 }
@@ -52,14 +57,14 @@ static inline void queue_enqueue(queue_t *q, void* value)
                 q->front++;
         }
 
-        q->queue[++q->rear] = value;
+        q->rear = (q->rear + 1) % MAX_ARRAY_SIZE;
+        q->queue[q->rear] = value;
 }
 
 static inline void* queue_dequeue(queue_t *q)
 {
-        if (queue_is_empty(q)) {
+        if (queue_is_empty(q))
                 return NULL;
-        }
 
         void* temp = q->queue[q->front];
 
@@ -67,7 +72,7 @@ static inline void* queue_dequeue(queue_t *q)
                 q->front = -1;
                 q->rear = -1;
         } else {
-                q->front++;
+                q->queue[q->front++] = NULL;
         }
 
         return temp;
