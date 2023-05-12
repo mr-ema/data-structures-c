@@ -22,6 +22,16 @@ A `tree` data structure is a non-linear data structure because it does not store
 A `general tree` data structure has no restriction on the number of nodes. It means that a parent node can have any number of child nodes.
 
 </br>
+
+<p  align="center">
+  <img
+    src="https://github.com/mr-ema/data-structures-c/blob/main/art/01-tree.svg"
+    alt="General Tree Graphical Representation"
+    title="General Tree Graphical Representation"
+    style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
+</p>
+
+</br>
 </br>
 
 ## Binary Tree
@@ -42,3 +52,13 @@ A node of a `binary tree` can have a maximum of two child nodes. In the given tr
 
 ## Balanced Tree
 If the height of the left sub-tree and the right sub-tree is equal or differs at most by 1, the tree is known as a `balanced tree`.  
+
+</br>
+
+<p  align="center">
+  <img
+    src="https://github.com/mr-ema/data-structures-c/blob/main/art/03-tree.svg"
+    alt="Balanced Binary Tree Graphical Representation"
+    title="Balanced Binary Tree Graphical Representation"
+    style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
+</p>
