@@ -7,9 +7,10 @@ struct Node {
         struct Node *Right;
 };
 
-struct Node* init(int root);
+struct Node* init(int key);
 
-void insert(struct Node *root, int key);
+void insert(struct Node **root, int key);
+void delete_key(struct Node **root, int key);
 void search(int input);
 
 void pre_traversal();

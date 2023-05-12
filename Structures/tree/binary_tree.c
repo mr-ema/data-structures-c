@@ -44,16 +44,16 @@ struct Node* init(int key)
         return p;
 }
 
-void insert(Tree *root, int key)
+void insert(Tree **root, int key)
 {
-        if (root == NULL) {
-                root = init(key);
+        if (!*root) {
+                *root = init(key);
                 return;
         }
 
         queue_t queue;
         queue_init(&queue);
-        queue_enqueue(&queue, root);
+        queue_enqueue(&queue, *root);
 
         Tree* temp = NULL;
         while (queue_len(&queue) > 0) {
@@ -103,13 +103,13 @@ Tree* get_parent_node(Tree* root, Tree* node) {
 
 }
 
-void delete_key(Tree* root, int key)
+void delete_key(Tree **root, int key)
 {
         if (is_empty()) {
                 return;
         }
 
-        Tree* target_node = recursive_find_node(root, key);
+        Tree* target_node = recursive_find_node(*root, key);
         if (!target_node) {
                 printf("error: key doesn't exist!");
                 return;
@@ -125,7 +125,7 @@ void delete_key(Tree* root, int key)
 
         queue_t queue;
         queue_init(&queue);
-        queue_enqueue(&queue, root);
+        queue_enqueue(&queue, *root);
 
         while (queue_len(&queue) > 0) {
                 temp = queue_dequeue(&queue);
@@ -133,7 +133,7 @@ void delete_key(Tree* root, int key)
                 if (level >= last_level && (temp->Left == NULL && temp->Right == NULL)) {
                         // find the parent node to nullify the pointer to be delete
                         // you can also keep track of the parent node for better perfomance
-                        parent = get_parent_node(root, temp);
+                        parent = get_parent_node(*root, temp);
 
                         target_node->Key = temp->Key;
                         break;
@@ -152,8 +152,11 @@ void delete_key(Tree* root, int key)
                 parent->Left = NULL;
         } else if (parent && parent->Right == temp) {
                 parent->Right = NULL;
+        } else {
+                // if not parent make the root node 'NULL'
+                *root = NULL;
         }
-
+        
         free(temp);
         size--;
 }
@@ -199,12 +202,12 @@ void post_order_traverse(Tree *root)
 void test_insert(void)
 {
     Tree *root = init(1);
-    insert(root, 2);
-    insert(root, 3);
-    insert(root, 4);
-    insert(root, 5);
-    insert(root, 6);
-    insert(root, 7);
+    insert(&root, 2);
+    insert(&root, 3);
+    insert(&root, 4);
+    insert(&root, 5);
+    insert(&root, 6);
+    insert(&root, 7);
 
     TEST_CHECK(1 == root->Key);
     TEST_CHECK(2 == root->Left->Key);
@@ -222,41 +225,45 @@ void test_insert(void)
 void test_delete_key(void)
 {
         Tree* root = init(50);  // root
-        insert(root, 30);       // left
-        insert(root, 20);       // right
-        insert(root, 40);       // left->left
-        insert(root, 70);       // left->right
-        insert(root, 60);       // right->left
-        insert(root, 80);       // right->right
+        insert(&root, 30);       // left
+        insert(&root, 20);       // right
+        insert(&root, 40);       // left->left
+        insert(&root, 70);       // left->right
+        insert(&root, 60);       // right->left
+        insert(&root, 80);       // right->right
 
-        delete_key(root, 20);
+        delete_key(&root, 20);
         TEST_CHECK(root->Right->Key == 40);
         TEST_CHECK(size == 6);
 
-        delete_key(root, 30);
+        delete_key(&root, 30);
         TEST_CHECK(root->Left->Key == 70);
         TEST_CHECK(size == 5);
 
-        delete_key(root, 50);
+        delete_key(&root, 50);
         TEST_CHECK(root->Key == 60);
         TEST_CHECK(size == 4);
 
-        delete_key(root, 70);
+        delete_key(&root, 70);
         TEST_CHECK(root->Left->Key == 80);
         TEST_CHECK(size == 3);
 
-        delete_key(root, 40);
+        delete_key(&root, 40);
         TEST_CHECK(root->Right->Key == 80);
         TEST_CHECK(size == 2);
 
-        delete_key(root, 60);
+        delete_key(&root, 60);
         TEST_CHECK(root->Key == 80);
         TEST_CHECK(size == 1);
 
         // last delete
-        delete_key(root, 80);
-        // TEST_CHECK(root == NULL); [FAILING]
+        delete_key(&root, 80);
+        TEST_CHECK(root == NULL);
         TEST_CHECK(size == 0);
+
+        insert(&root, 1);
+        TEST_CHECK(root->Key == 1);
+        TEST_CHECK(size == 1);
 }
 
 TEST_LIST = {
