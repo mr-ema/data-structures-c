@@ -2,13 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-/* MINIMUM BINARY HEAP */
-
-typedef struct Node {
-        struct Node *Left;
-        struct Node *Right;
-} Node;
-
+/* MIN-HEAP DATA STRUCTURE */
 typedef struct MinHeap {
         int *Arr;
         int Capacity;
