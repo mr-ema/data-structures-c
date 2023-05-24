@@ -1,6 +1,11 @@
 # Algorithms And Data Structures In C
-I'm learning data structures and algorithms so here you can find some basic `C` implementation along with graphics of it. Also I will be leaving some resources in case you want to go deeper.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+I'm learning data structures and algorithms so here you can find some
+basic `C` implementation along with graphics of it. Also I will be
+leaving some resources in case you want to go deeper.
+
+</br>
 </br>
 
 <p  align="center">
@@ -14,33 +19,33 @@ I'm learning data structures and algorithms so here you can find some basic `C` 
 </br>
 
 ## Resources
-- _Visual Algo_ - Visualise Algorithms -> [_Visual Algo_](https://visualgo.net/en)
-- _Big-O_ - Time And Space Complexity -> [_Cheat Sheet_](https://www.bigocheatsheet.com/)
-- _Programiz_ - Simple C Compiler (Online) -> [_Programiz_](https://www.programiz.com/c-programming/online-compiler)
-- _Jenny's Lectures CS IT_ - Data Structures And Algorithms -> [_Youtube Playlist_](https://www.youtube.com/playlist?list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU)
-- _ThePrimeagen_ - The Last Algorithms Course You'll Need -> [_Frontend Masters_](https://frontendmasters.com/courses/algorithms/)
-- _Two Star Programming_ - Linked List Hack -> [_Word Aligned_](https://wordaligned.org/articles/two-star-programming)
-- _OpenDSA_ - Heap Memory -> [_OpenDSA_](https://opendsa-server.cs.vt.edu/ODSA/Books/CS2/html/HeapMem.html)
+- [_Visual Algo_ - Visualise Algorithms](https://visualgo.net/en)
+- [_Big-O_ - Time And Space Complexity Cheat Sheet](https://www.bigocheatsheet.com/)
+- [_Programiz_ - Simple C Online Compiler](https://www.programiz.com/c-programming/online-compiler)
+- [_Jenny's Lectures CS IT_ - Data Structures And Algorithms (Youtube Playlist)](https://www.youtube.com/playlist?list=PLdo5W4Nhv31bbKJzrsKfMpo_grxuLl8LU)
+- [_ThePrimeagen_ - The Last Algorithms Course You'll Need](https://frontendmasters.com/courses/algorithms/)
+- [_Two Star Programming_ - Linked List Hack](https://wordaligned.org/articles/two-star-programming)
+- [_OpenDSA_ - Heap Memory](https://opendsa-server.cs.vt.edu/ODSA/Books/CS2/html/HeapMem.html)
 
 </br>
 
 ## Linear Data Structures
-- [Array](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#array---linear-data-structure)
-- [Linked List](https://github.com/mr-ema/data-structures-c/tree/main/Structures/list#linked-list---linear-data-structure)
-- [Stack](https://github.com/mr-ema/data-structures-c/tree/main/Structures/stack#stack---linear-data-structure)
-- [Queue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#queue---linear-data-structure)
+- [Array](./Structures/array#array---linear-data-structure)
+- [Linked List](./Structures/list#linked-list---linear-data-structure)
+- [Stack](./Structures/stack#stack---linear-data-structure)
+- [Queue](./Structures/queue#queue---linear-data-structure)
 
 
 </br>
 
 ## Nonlinear Data Structures
-- [Tree](https://github.com/mr-ema/data-structures-c/tree/main/Structures/tree#tree---nonlinear-data-structure)
-- [Graph](https://github.com/mr-ema/data-structures-c/tree/main/Structures/graph#graph---nonlinear-data-structure)
+- [Tree](./Structures/tree#tree---nonlinear-data-structure)
+- [Graph](./Structures/graph#graph---nonlinear-data-structure)
 
 </br>
 
 ## Conversion Algorithms
-- [Infix To Postfix](https://github.com/mr-ema/data-structures-c/blob/main/Algorithms/conversion/infix_to_postfix.c)
-- [Infix To Prefix](https://github.com/mr-ema/data-structures-c/blob/main/Algorithms/conversion/infix_to_prefix.c)
+- [Infix To Postfix](./Algorithms/conversion/infix_to_postfix.c)
+- [Infix To Prefix](./Algorithms/conversion/infix_to_prefix.c)
 
 </br>

@@ -1,141 +1,143 @@
 #include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 
-#include "stack.h"
-#include "acutest.h"
+typedef struct Node {
+        int data;
+        struct Node *next;
+} Node;
 
-struct Node {
-        int Data;
-        struct Node *Next;
-} *top;
+typedef struct {
+        struct Node *top;
+        size_t len;
+} Stack;
 
-int size = 0; 
 
-struct Node* new_node(int value, struct Node* next)
-{
-        struct Node *p = malloc(sizeof *p);
-
-        p->Data = value;
-        p->Next = next;
-
-        return p;
-}
-
-int is_empty()
-{
-        return (size <= 0);
-}
-
-int len()
-{
-        return size;
-}
-
-void init()
-{
-        top = NULL;
-        size = 0;
-}
-
-int peek()
-{
-        if (!top) {
-                // printf("Stack is empty\n");
-                return 0;
+Stack* stack_init() {
+        Stack *stack = malloc(sizeof(Stack));
+        if (!stack) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
         }
 
-        return top->Data;
+        stack->len = 0;
+        stack->top = NULL;
+
+        return stack;
 }
 
-void push(int value)
-{
-        top = new_node(value, top);
-        size++;
-}
-
-void pop()
-{
-        if (size <= 0) {
-                // printf("Stack Underflow\n");
+void free_list_recursive(Node *node) {
+        if (!node)
                 return;
+
+        free_list_recursive(node->next);
+
+        free(node);
+}
+
+void stack_deinit(Stack **self) {
+        free_list_recursive((*self)->top); // Deallocate the entire list
+        free(*self); // Deallocate the stack
+
+        *self = NULL; // Remove the pointer reference to the stack
+}
+
+Node* new_node(int value, Node *next) {
+        Node *node = malloc(sizeof(Node));
+        if (!node) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
         }
-        struct Node *tmp = top;
 
-        top = top->Next;
-        free(tmp);
-        size--;
+        node->data = value;
+        node->next = next;
+
+        return node;
 }
 
-void display()
-{
-        if (!top) {
-                // printf("Stack is empty\n");
-                return;
+int stack_is_empty(const Stack *self) {
+        return (self->len <= 0);
+}
+
+size_t stack_len(const Stack *self) {
+        return (self->len);
+}
+
+int stack_peek(const Stack *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "stack is empty!\n");
+                return -1;
         }
-        struct Node *tmp = top;
 
-        while (tmp != 0) {
-                printf("|\t%d\t|\n", tmp->Data);
-                tmp = tmp->Next;
+        return self->top->data;
+}
+
+void stack_push(Stack *self, int value) {
+        Node *prev = self->top;
+        self->top = new_node(value, prev);
+
+        self->len++;
+}
+
+int stack_pop(Stack *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to pop, stack is empty!\n");
+                return -1;
         }
+
+        int item = self->top->data;
+
+        Node *temp  = self->top;
+        self->top = temp->next;
+
+        free(temp);
+        self->len--;
+
+        return item;
 }
 
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
+int main() {
+        Stack* stack = stack_init();
 
-void test_push()
-{
-        init();
+        // Test stack_is_empty()
+        printf("Is stack empty? %s\n", stack_is_empty(stack) ? "Yes" : "No");
 
-        TEST_CHECK(is_empty());
+        // Test stack_push()
+        stack_push(stack, 10);
+        stack_push(stack, 20);
+        stack_push(stack, 30);
 
-        push(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
+        // Test stack_len()
+        printf("Stack length: %zu\n", stack_len(stack));
 
-        push(2);
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 2);
+        // Test stack_peek()
+        printf("Top element: %d\n", stack_peek(stack));
 
-        push(3);
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 3);
+        // Test stack_pop()
+        printf("Popped element: %d\n", stack_pop(stack));
+
+        // Test stack_push() after pop
+        stack_push(stack, 40);
+
+        // Test stack_len() after push
+        printf("Stack length: %zu\n", stack_len(stack));
+
+        // Test stack_pop() until empty
+        printf("Popping all elements: ");
+        while (!stack_is_empty(stack)) {
+            printf("%d ", stack_pop(stack));
+        }
+        printf("\n");
+
+        // Test stack_is_empty() after popping
+        printf("Is stack empty? %s\n", stack_is_empty(stack) ? "Yes" : "No");
+
+        // Test stack_peek() on an empty stack
+        printf("Peeking on an empty stack: %d\n", stack_peek(stack));
+
+        // Test stack_pop() on an empty stack
+        printf("Popping from an empty stack: %d\n", stack_pop(stack));
+
+        // Deallocate the stack
+        stack_deinit(&stack);
 }
-
-void test_pop()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        push(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        push(2);
-
-        pop();
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        push(3);
-
-        pop();
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        pop();
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        pop();
-        TEST_CHECK(len() == 0);
-}
-
-TEST_LIST = {
-        { "PUSH", test_push },
-        { "POP", test_pop },
-
-        { NULL, NULL }
-};

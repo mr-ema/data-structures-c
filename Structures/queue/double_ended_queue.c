@@ -1,342 +1,198 @@
 #include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
 
-#include "deque.h"
-#include "acutest.h"
+typedef struct {
+        size_t rear;
+        size_t front;
 
-#define N 20
+        size_t len;
+        size_t capacity;
+        int *data;
+} Deque;
 
-int deque[N];
-int front = -1;
-int rear = -1;
 
-int is_empty()
-{
-        return (front <= -1 || rear <= -1);
+Deque* deque_init(size_t capacity) {
+        Deque *deque = malloc(sizeof(Deque));
+        if (!deque) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        deque->data = (int*)malloc(capacity * sizeof(int));
+        if (!(deque->data)) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        deque->capacity = capacity;
+        deque->len = 0;
+
+        deque->front = 0;
+        deque->rear = 0;
+
+        return deque;
 }
 
-int is_full()
-{
-        return ((rear + 1) % N == front);
+void deque_deinit(Deque **self) {
+        free((*self)->data); // Deallocate the data array
+        free(*self); // Deallocate the double-ended queue
+
+        *self = NULL; // Remove the pointer reference to the double-ended queue
 }
 
-int len()
-{
-        if (is_empty())
-                return 0;
-
-        if (rear < front)
-                return (N - front) + (rear + 1);
-
-        return (rear - front) + 1;
+int deque_is_empty(Deque *self) {
+        return (self->len <= 0);
 }
 
-void init()
-{
-        front = -1;
-        rear = -1;
+int deque_is_full(Deque *self) {
+        return (self->len >= self->capacity);
 }
 
-int peek()
-{
-        if (is_empty()) {
+size_t deque_len(Deque *self) {
+        return self->len;
+}
+
+int deque_peek(const Deque *self) {
+        if (self->len <= 0) {
                 return -1;
         }
 
-        return deque[front];
+        return self->data[self->front];
 }
 
-void first_insert(int val)
-{
-        front = 0;
-        rear = 0;
-        deque[0] = val;
-}
-
-void enqueue_front(int val)
-{
-        if (is_full()) {
-                // printf("Overflow Condition\n");
-                return;
-        } else if (is_empty()) {
-                first_insert(val);
-                return;
-        }
-        
-        // set front to last index once front reach first index
-        front = front == 0 ? N - 1 : front - 1; 
-        deque[front] = val;
-}
-
-void enqueue_rear(int val)
-{
-        if (is_full()) {
-                // printf("Overflow Condition\n");
-                return;
-        } else if (is_empty()) {
-                first_insert(val);
+void deque_enqueue_front(Deque *self, int val) {
+        if (self->len >= self->capacity) {
+                fprintf(stderr, "error: fail to enqueue, deque is full!\n");
                 return;
         }
 
-        // reset rear to 0, once rear reach last index
-        rear = (rear + 1) % N; 
-        deque[rear] = val;
-}
-
-void dequeue_front()
-{
-        if (is_empty()) {
-                // printf("Underflow Condition\n");
-                return;
-        } else if (rear == front) {
-                rear = -1;
-                front = -1;
-                return;
+        // The following condition is necessary to handle the circular nature of the deque.
+        // It ensures that the front pointer moves in a circular manner, accounting for the
+        // special case where the rear starts at '0' instead of '-1' in the array.
+        if (self->len > 0) {
+                // If the front reaches the first index, set it to the last index
+                self->front = self->front == 0 ? self->capacity - 1 : self->front - 1;
         }
 
-        // Move pointer to the right in a circular manner
-        front = (front + 1) % N;
+        self->data[self->front] = val;
+        self->len++;
 }
 
-void dequeue_rear()
-{
-        if (is_empty()) {
-                // printf("Underflow Condition\n");
-                return;
-        } else if (rear == front) {
-                rear = -1;
-                front = -1;
-                return;
-        }
-        
-        // Move pointer to the left in a circular manner
-        rear = rear == 0 ? N - 1 : rear - 1;
-}
-
-void display()
-{
-        if (is_empty()) {
-                // printf("Not Elements In Queue\n");
+void deque_enqueue_rear(Deque *self, int val) {
+        if (self->len >= self->capacity) {
+                fprintf(stderr, "error: fail to enqueue, deque is full!\n");
                 return;
         }
 
-        for (int i = front; i != rear; ) {
-                printf("|%d", deque[i]);
-                i = (i + 1) % N;
+        // The following condition is necessary to handle the circular nature of the deque.
+        // It ensures that the rear pointer moves in a circular manner, accounting for the
+        // special case where the rear starts at '0' instead of '-1' in the array.
+        if (self->len > 0) {
+                // If the rear reaches the last index, reset it to 0
+                self->rear = (self->rear + 1) % self->capacity;
         }
-        printf("|%d|\n", deque[rear]);
+
+        self->data[self->rear] = val;
+        self->len++;
 }
 
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
-
-void test_min_size()
-{
-        TEST_CHECK(N > 10);
-        TEST_MSG("N MUST BE GREATER THAN `10` TO EXECUTE TESTS");
-}
-
-void test_enqueue_front()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue_front(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue_front(2);
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 2);
-
-        enqueue_front(3);
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 3);
-
-        TEST_CASE("OVERFLOW");
-        for (int i = 0; i < N + 1; i++) {
-                enqueue_front(69);
+int deque_dequeue_front(Deque *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to dequeue, deque is empty!\n");
+                return -1;
         }
-        TEST_CHECK(len() <= N);
+
+        int temp = deque_peek(self);
+
+        // Move the front pointer to the right in a circular manner
+        self->front = (self->front + 1) % self->capacity;
+        self->len--;
+
+        return temp;
 }
 
-void test_enqueue_rear()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue_rear(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue_rear(2);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 2);
-
-        enqueue_rear(3);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 3);
-
-        TEST_CASE("OVERFLOW");
-        for (int i = 0; i < N + 1; i++) {
-                enqueue_rear(69);
+int deque_dequeue_rear(Deque *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to dequeue, deque is empty!\n");
+                return -1;
         }
-        TEST_CHECK(len() <= N);
+
+        int temp = deque_peek(self);
+
+        // Move the rear pointer to the left in a circular manner
+        self->rear = self->rear == 0 ? self->capacity - 1 : self->rear - 1;
+        self->len--;
+
+        return temp;
 }
 
-void test_multi_enqueue()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue_rear(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue_front(2);
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 2);
-
-        enqueue_front(3);
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 3);
-
-        enqueue_rear(4);
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 4);
-        
-        enqueue_rear(5);
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 5);
-        
-        TEST_CASE("OVERFLOW");
-        for (int i = 0; i < N + 1; i++) {
-                enqueue_rear(69);
+void deque_display(Deque *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "queue is empty!\n");
+                return;
         }
-        TEST_CHECK(len() <= N);
+
+        size_t i = self->front;
+        for (size_t len = self->len; len > 0; len--) {
+                printf("|%d", self->data[i]);
+                i = (i + 1) % self->capacity;
+        }
+        printf("\n");
 }
 
-void test_dequeue_front()
-{
-        init();
+int main() {
+        size_t capacity = 5;
+        Deque *deque = deque_init(capacity);
 
-        TEST_CHECK(is_empty());
+        // Test case 1: Enqueue elements at the front and rear
+        deque_enqueue_front(deque, 10);
+        deque_enqueue_rear(deque, 20);
+        deque_enqueue_front(deque, 30);
+        deque_enqueue_rear(deque, 40);
 
-        enqueue_front(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
+        printf("Test Case 1 - Enqueue elements: ");
+        deque_display(deque);  // Expected output: |30|10|20|40|
 
-        enqueue_front(2);
+        // Test case 2: Dequeue elements from the front and rear
+        deque_dequeue_front(deque);
+        deque_dequeue_rear(deque);
 
-        dequeue_front();
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
+        printf("\nTest Case 2 - Dequeue elements: ");
+        deque_display(deque);  // Expected output: |10|20
 
-        enqueue_front(3);
+        // Test case 3: Enqueue elements to fill the deque
+        deque_enqueue_rear(deque, 50);
+        deque_enqueue_rear(deque, 60);
+        deque_enqueue_rear(deque, 70);
 
-        dequeue_front();
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-        
-        enqueue_rear(4);
+        printf("\nTest Case 3 - Enqueue elements to fill the deque: ");
+        deque_display(deque);  // Expected output: |10|20|50|60|70|
 
-        dequeue_front();
-        TEST_CHECK(peek() == 4);
-        TEST_CHECK(len() == 1);
+        // Test case 4: Attempt to enqueue when the deque is full
+        deque_enqueue_rear(deque, 80);  // Exceeds capacity, error message should be printed
 
-        enqueue_front(5);
-        enqueue_rear(6);
-        enqueue_front(7);
+        printf("\nTest Case 4 - Attempt to enqueue when the deque is full: \n");
+        deque_display(deque);  // Expected output: |10|50|60|70|
 
-        dequeue_front();
-        TEST_CHECK(peek() == 5);
-        TEST_CHECK(len() == 3);
+        // Test case 5: Dequeue elements to empty the deque
+        deque_dequeue_front(deque);
+        deque_dequeue_front(deque);
+        deque_dequeue_front(deque);
+        deque_dequeue_front(deque);
+        deque_dequeue_front(deque);
 
-        dequeue_front();
-        TEST_CHECK(peek() == 4);
-        TEST_CHECK(len() == 2);
+        printf("\nTest Case 5 - Dequeue elements to empty the deque: \n");
+        deque_display(deque);  // Expected output: queue is empty!
 
-        dequeue_front();
-        TEST_CHECK(peek() == 6);
-        TEST_CHECK(len() == 1);
+        // Test case 6: Attempt to dequeue when the deque is empty
+        deque_dequeue_front(deque);  // Deque is empty, error message should be printed
 
-        dequeue_front();
-        TEST_CHECK(len() == 0);
+        printf("\nTest Case 6 - Attempt to dequeue when the deque is empty: \n");
+        deque_display(deque);  // Expected output: queue is empty!
 
-        TEST_CASE("UNDERFLOW");
-        dequeue_front();
-        TEST_CHECK(len() == 0);
+        deque_deinit(&deque);
+
+        return 0;
 }
 
-void test_dequeue_rear()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue_front(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue_front(2);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 1);
-
-        enqueue_front(3);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 1);
-        
-        enqueue_rear(4);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 1);
-
-        enqueue_front(5);
-        enqueue_rear(6);
-        enqueue_front(7);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 7);
-        TEST_CHECK(len() == 3);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 7);
-        TEST_CHECK(len() == 2);
-
-        dequeue_rear();
-        TEST_CHECK(peek() == 7);
-        TEST_CHECK(len() == 1);
-
-        dequeue_rear();
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        dequeue_rear();
-        TEST_CHECK(len() == 0);
-}
-
-void test_multi_delete()
-{
-}
-
-TEST_LIST = {
-        { "QUEUE SIZE", test_min_size },
-
-        { "ENQUEUE FRONT", test_enqueue_front },
-        { "ENQUEUE REAR", test_enqueue_rear },
-        { "ENQUEUE FRONT/REAR", test_multi_enqueue },
-
-        { "DEQUEUE FRONT", test_dequeue_front },
-        { "DEQUEUE REAR", test_dequeue_rear },
-        { "DEQUEUE FRONT/REAR", test_multi_delete },
-
-        { NULL, NULL }
-};

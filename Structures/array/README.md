@@ -1,29 +1,29 @@
 # Array - Linear Data Structure
-An `array` is a linear data structure that collects elements of the same data type and stores them in contiguous memory locations.
+An **array** is a linear data structure that collects elements of the same data type and stores them in contiguous memory locations.
 
 </br>
 
 ## Navigation
-- **Array**
-  - [Static Array](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#static-array)
-  - [Definitions](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#definitions)
-  - [Sub Array](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#subarray)
-  - [Get An Element](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#get-an-element)
-  - [Inserting Elements](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#inserting-elements)
-  - [Deleting Elements](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#deleting-elements)
-  
-- **Security**
-  - [Segmentation Fault](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#segmentation-fault)
-  - [Buffer Overflow](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#buffer-overflow)
-  - [Buffer Over-Read](https://github.com/mr-ema/data-structures-c/tree/main/Structures/array#buffer-over-reads)
+**Array**
+- [Static Array](#static-array)
+- [Definitions](#definitions)
+- [Sub-Array](#sub-array)
+- [Get An Element](#get-an-element)
+- [Inserting Elements](#inserting-elements)
+- [Deleting Elements](#deleting-elements)
+
+**Security**
+- [Segmentation Fault](#segmentation-fault)
+- [Buffer Overflow](#buffer-overflow)
+- [Buffer Over-Read](#buffer-over-reads)
 
 </br>
 </br>
 
 ## Resources
-- _Low Level Learning_ - Strings in C are getting people HACKED -> [Youtube Video](https://www.youtube.com/watch?v=fjMrDDj47E8)
-- _The Geek Stuff_ - Buffer Overflow Attack Explained with a C Program -> [Article](https://www.thegeekstuff.com/2013/06/buffer-overflow)
-- _Tutorials Point_ - Operating System - Memory Management -> [Article](https://www.tutorialspoint.com/operating_system/os_memory_management.htm)
+- [_Low Level Learning_- Strings in C are getting people hacked (Video)](https://www.youtube.com/watch?v=fjMrDDj47E8)
+- [_The Geek Stuff_ - Buffer overflow attack explained with a C program](https://www.thegeekstuff.com/2013/06/buffer-overflow)
+- [_Tutorials Point_ - Operating system - memory management](https://www.tutorialspoint.com/operating_system/os_memory_management.htm)
 
 </br>
 </br>
@@ -57,8 +57,13 @@ An `array` is a linear data structure that collects elements of the same data ty
 </br>
 </br>
 
-## SubArray
-A subarray is commonly defined as a part or section of an array. **A subarray must maintain the order of the original array**. For example, the subarrays of array `{20, 21, 22}` are `{20}`, `{20, 21}`, `{20, 21, 22}`, `{21}`, `{21, 22}`, and `{22}`. **Now if you alter the original order it would be considered a Subset**. For example, `{22, 21}` is a subset of `{20, 21, 22}`.
+## Sub-Array
+A sub-array is commonly defined as a part or section of an array. **A
+sub-array must maintain the order of the original array**. For example,
+the sub-arrays of array `{20, 21, 22}` are `{20}`, `{20, 21}`, `{20, 21,
+22}`, `{21}`, `{21, 22}`, and `{22}`. **Now if you alter the original
+order it would be considered a Subset**. For example, `{22, 21}` is a
+subset of `{20, 21, 22}`.
 
 </br>
 
@@ -70,9 +75,23 @@ A subarray is commonly defined as a part or section of an array. **A subarray mu
     style="display: inline-block; margin: 0 auto; height: auto; width: 90%;">
 </p>
 
-#### Method 1
-You build a **sub-array** by moving the **lower bound** from 0 to 2 something similar to binary search.
-For example, given the **array** with the elements `{20, 21, 22, 23, 24, 25}` if you change `lower bound` to be `2` you will get the **sub-array** `{22, 23, 24, 25}`.
+</br>
+
+### Method 1: Creating a Sub-array by Adjusting the Lower Bound
+In this method, you can build a sub-array by adjusting the **lower bound**
+starting from **0** and moving it to a different position, similar to the
+concept of binary search.
+
+For example, consider the initial array with the elements `{20, 21, 22,
+23, 24, 25}`. By changing the **lower bound** to **2**, you can obtain a sub-array
+`{22, 23, 24, 25}`.
+
+By adjusting the **lower bound**, you specify the starting position from which
+the sub-array is created. In this case, the lower bound is set to **2**,
+indicating that the sub-array should start from the element at index **2**
+(which is 22 in this example), and include all the subsequent elements
+of the original array.
+
 ```c
 // This is a dummy implementation but a think is a good example of how you can create a sub-array
 
@@ -97,9 +116,17 @@ if (user_input > 0 && user_input < upper_bound)
 
 </br>
 
-#### Method 2
-You create a pointer to a given address in the array.
-For example, in the **array** `{20, 21, 22, 23, 24, 25}` you create a new **pointer variable** let's call it `sub_arr` and you assign it the **address of the element 22 that is 0x18**. Now our pointer will point to **0x18**. Then if you do `sub_arr[0]` you will get **22**.
+### Method 2: Accessing Array Elements through Pointer Arithmetic
+In the given array `{20, 21, 22, 23, 24, 25}`, you can create a new pointer
+variable, let's call it `sub_arr`, and assign it the address of a specific
+element, such as the element **22**, which has the memory address **0x18**. By
+doing this, the pointer `sub_arr` will now point to the memory address **0x18**.
+
+If you subsequently use the expression `sub_arr[0]`, you will retrieve the
+value **22**. This is because `sub_arr[0]` dereferences the pointer `sub_arr`
+and retrieves the value at the memory address it points to, which in
+this case is **0x18**.
+
 ```c
 // initialize array
 int arr[6] = {20, 21, 22, 23, 24, 25};
@@ -131,22 +158,15 @@ if (user_input > lower_bound && user_input < upper_bound - 1)
 ## Get An Element
 When you do something like `printf("%d", arr[0])`
 
-#### How does the compiler knows what to print?
-It may seem like magic but to understand what is really happening you need to know the following:
-- `arr` -> Is a **pointer to the memory address of the first element**
-- `[n]` -> Is the index of an array element or **the offset from index 0**
-- `data type size` -> Is the size of the data type for example **int takes 4 bytes**
+### How does the program knows what to print?
+To comprehend what is truly happening, it is essential to understand the following concepts:
 
-With this information the compiler is able to calculate the memory address of the required element using the following formula:
+- **arr** Is a pointer to the memory address of the first element
+- **[n]** Denotes the index of an array element or the offset from index 0
+- **type size** Represents the size of the data type, such as 4 bytes for an integer
 
-**_`arr + (offset * data_type_size) = address of element`_**
-
-Also this is why when you do something like arr[-1] you get an invalid adresses or undefined behavior or even buffer overflow.
-
-**_example: arr[0] -> 10 + (0 * 4) = 10 -> returns 20_\
-_example: arr[2] -> 10 + (2 * 4) = 18 -> returns 22_**
-
-</br> 
+Armed with this information, the program can compute the memory address
+of the desired element using the formula: **_arr + (offset * type_size)_**
 
 <p  align="center">
   <img
@@ -156,43 +176,63 @@ _example: arr[2] -> 10 + (2 * 4) = 18 -> returns 22_**
     style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
 </p>
 
-**Try It Your Self**
+It's important to note that attempting to access elements beyond the
+array boundaries, or employing negative indices like `arr[-1]`, can result
+in invalid addresses, undefined behavior, or even buffer overflow.
+
+For instance:
 ```c
-#include <stdio.h>
+    /*********************************************
+     *                                           *
+     *       +---------------------------+       *
+     *       | 0x10 | 0x14 | 0x18 | 0x22 |       *
+     *       |  20  |  21  |  22  |  23  |       *
+     *       |  00  |  01  |  02  |  03  |       *
+     *       +---------------------------+       *
+     *                                           *
+     * Formula: arr + (offset * type_size)       *
+     *                                           *
+     *   arr[0] -> 10 + (0 * 4) = 10 yields 20   *
+     *   arr[2] -> 10 + (2 * 4) = 18 yields 22   *
+     *                                           *
+     *********************************************/
 
-int main() {
-    int arr[3];
+    #include <stdio.h>
 
-    printf("arr:     %p\n", arr);     // pointer to the first element
-    printf("&arr[0]: %p\n", &arr[0]); // same as arr
-    printf("&arr[1]: %p\n", &arr[1]); // 4 bytes after arr[0]
-    printf("&arr[2]: %p\n", &arr[2]); // 8 bytes after arr[0]
+    int main() {
+            int arr[3];
 
-    return 0;
-}
+            printf("arr:     %p\n", arr);     // pointer to the first element
+            printf("&arr[0]: %p\n", &arr[0]); // same as arr
+            printf("&arr[1]: %p\n", &arr[1]); // 4 bytes after arr[0]
+            printf("&arr[2]: %p\n", &arr[2]); // 8 bytes after arr[0]
+
+            return 0;
+    }
 ```
 
 </br>
 </br>
 
 ## Inserting Elements
-We can insert the elements wherever we want, which means we can insert either at starting position or at the middle or at last or anywhere in the array.
+We have the flexibility to insert elements anywhere in the array. This
+means we can insert elements at the starting position, in the middle,
+at the last position, or anywhere else in the array.
 
 </br>
 
-### Inserting At Starting Poisition
+### Inserting At Starting Position
 
 <p  align="center">
   <img
     src="https://github.com/mr-ema/data-structures-c/blob/main/art/04-array.svg"
-    alt="Inserting At Starting Poisition Graphic Representation"
-    title="Inserting At Starting Poisition Graphic Representation"
+    alt="Inserting At Starting Position Graphic Representation"
+    title="Inserting At Starting Position Graphic Representation"
     style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
 </p>
 
 ```c
-void insert_beg(int val)
-{
+void insert_beg(int val) {
         if (is_full()) {
                 printf("Array Is Full\n");
                 return;
@@ -210,19 +250,18 @@ void insert_beg(int val)
 
 </br>
 
-### Inserting At Given Poisition
+### Inserting At Given Position
 
 <p  align="center">
   <img
     src="https://github.com/mr-ema/data-structures-c/blob/main/art/05-array.svg"
-    alt="Inserting At Given Poisition Graphic Representation"
-    title="Inserting At Given Poisition Graphic Representation"
+    alt="Inserting At Given Position Graphic Representation"
+    title="Inserting At Given Position Graphic Representation"
     style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
 </p>
 
 ```c
-void insert_at_pos(int pos, int val)
-{
+void insert_at_pos(int pos, int val) {
         if (is_full()) {
                 printf("Array Is Full\n");
                 return;
@@ -243,19 +282,18 @@ void insert_at_pos(int pos, int val)
 
 </br>
 
-### Inserting At Ending Poisition
+### Inserting At Ending Position
 
 <p  align="center">
   <img
     src="https://github.com/mr-ema/data-structures-c/blob/main/art/06-array.svg"
-    alt="Inserting At Ending Poisition Graphic Representation"
-    title="Inserting At Ending Poisition Graphic Representation"
+    alt="Inserting At Ending Position Graphic Representation"
+    title="Inserting At Ending Position Graphic Representation"
     style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
 </p>
 
 ```c
-void insert_end(int val)
-{
+void insert_end(int val) {
         if (is_full()) {
                 printf("Array Is Full\n");
                 return;
@@ -264,7 +302,6 @@ void insert_end(int val)
         // ++size is the pre-increment operator and is used to increment
         // the value of a variable before using it in an expression.
         arr[++size] = val; // over-write last element.
-        
 }
 ```
 
@@ -272,11 +309,13 @@ void insert_end(int val)
 </br>
 
 ## Deleting Elements
-As well as we can insert elements wherever we wany we can also delete them. Which means we can delete either at start or at the middle or at the end or anywhere in the array.
+We have the flexibility to insert elements anywhere in the array, and
+we can also delete them. This means we can delete elements at the start,
+in the middle, at the end, or anywhere else in the array.
 
 </br>
 
-### Deleting At Begining Of Array
+### Deleting At Beginning Of Array
 
 <p  align="center">
   <img
@@ -287,8 +326,7 @@ As well as we can insert elements wherever we wany we can also delete them. Whic
 </p>
 
 ```c
-void delete_beg()
-{
+void delete_beg() {
         if (is_empty()) {
                 printf("Array Is Empty\n");
                 return;
@@ -305,19 +343,18 @@ void delete_beg()
 
 </br>
 
-### Deleting At Given Poisition
+### Deleting At Given Position
 
 <p  align="center">
   <img
     src="https://github.com/mr-ema/data-structures-c/blob/main/art/08-array.svg"
-    alt="Deleting At Given Poisition Graphic Representation"
-    title="Deleting At Given Poisition Graphic Representation"
+    alt="Deleting At Given Position Graphic Representation"
+    title="Deleting At Given Position Graphic Representation"
     style="display: inline-block; margin: 0 auto; height: auto; width: 80%;">
 </p>
 
 ```c
-void delete_at_pos(int pos)
-{
+void delete_at_pos(int pos) {
         if (is_empty()) {
                 printf("Array Is Empty\n");
                 return;
@@ -347,8 +384,7 @@ void delete_at_pos(int pos)
 </p>
 
 ```c
-void delete_end()
-{
+void delete_end() {
         if (is_empty()) {
                 printf("Array Is Empty\n");
                 return;
@@ -362,7 +398,12 @@ void delete_end()
 </br>
 
 ## Segmentation Fault
-A segmentation fault occurs when a program attempts to access a memory location that it is not allowed to access, or attempts to access a memory location in a way that is not allowed (for example, attempting to write to a read-only location, or to overwrite part of the operating system). **Both buffer overflow and buffer over-read can produce a segmentation fault**. [_here a good explanation_](https://qr.ae/prayGz)
+A segmentation fault occurs when a program attempts to access a memory
+location that it is not allowed to access, or attempts to access a
+memory location in a way that is not allowed (for example, attempting
+to write to a read-only location, or to overwrite part of the operating
+system). **Both buffer overflow and buffer over-read can produce a
+segmentation fault**. [_more about segmentation fault_](https://qr.ae/prayGz)
 
 </br>
 
@@ -377,15 +418,14 @@ A segmentation fault occurs when a program attempts to access a memory location 
 ```c
 // If you run this and you will get a segmentation fault.
 
-int main()
-{
+int main() {
         // A string literal is stored in read only part of data segment
         char *str = "err";
  
         // Let's say *str get allocated in address 0x10 in read only memory
         // This will Try to modify 0x11 read only memory and will produce a Segmentation Fault
         *(str+1) = 'n'; // 0x10 + 1 => 0x11 => 'r'
-        
+
         return 0;
 }
 ```
@@ -394,7 +434,9 @@ int main()
 </br>
 
 ## Buffer Overflow
-A buffer overflow occurs when the volume of data exceeds the storage capacity of the memory buffer. As a result, the program attempting to write the data to the buffer overwrites adjacent memory locations.
+A buffer overflow occurs when the volume of data exceeds the storage
+capacity of the memory buffer. As a result, the program attempting to
+write the data to the buffer overwrites adjacent memory locations.
 
 </br>
 
@@ -407,8 +449,7 @@ A buffer overflow occurs when the volume of data exceeds the storage capacity of
 </p>
 
 ```c
-int main()
-{
+int main() {
         char buffer[3];
         int i = 3;
  
@@ -443,10 +484,9 @@ A buffer over-read is an anomaly where a program, while reading data from a buff
 ```c
 // This program will print data after the buffer boundary
 
-int main()
-{
+int main() {
         char buffer[3];
-        
+
         for (int i = 0; i < 1000; i++) {
                 printf("%c", buffer[i]);
         }

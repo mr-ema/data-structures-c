@@ -1,34 +1,35 @@
 # Queue - Linear Data Structure
-Unlike stacks, a `queue` is open at both its ends. One end is always used to insert data `enqueue` and the other is used to remove data `dequeue`.
+Unlike stacks, a **queue** is open at both its ends. One end is always used to insert data **enqueue** and the other is used to remove data **dequeue**.
 Queue follows **FIFO** (First-In-First-Out) methodology.
 
 </br>
 
 ## Navigation
-- **Queue**
-  - [Simple Queue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#simple-queue)
-  - [Circular Queue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#circular-queue)
-  - [Priority Queue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#priority-queue)
-  - [Double Ended Queue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#double-ended-queue)
-
-- **Operations**
-  - [Enqueue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#enqueue)
-  - [Dequeue](https://github.com/mr-ema/data-structures-c/tree/main/Structures/queue#dequeue)
+**Queue**
+  - [Simple Queue](#simple-queue)
+  - [Circular Queue](#circular-queue)
+  - [Priority Queue](#priority-queue)
+  - [Double Ended Queue](#double-ended-queue)
+  - [Enqueue Operation](#enqueue)
+  - [Dequeue Operation](#dequeue)
 
 </br>
 
 ## Recurses
-- _Queue Short Animation_ -> [Youtube Video](https://www.youtube.com/watch?v=ojGf3SH7n48)
-- _Queue Applications_ -> [Article](https://www.geeksforgeeks.org/applications-of-queue-data-structure/)
-- _Device Queue_ -> [Article](https://www.krivalar.com/OS-device-queue)
-- _OS Process Scheduling_ -> [Article](https://www.tutorialspoint.com/operating_system/os_process_scheduling.htm)
-
+- [_Queue Short Animation_ (Video)](https://www.youtube.com/watch?v=ojGf3SH7n48)
+- [_Queue Applications_](https://www.geeksforgeeks.org/applications-of-queue-data-structure/)
+- [_Device Queue_](https://www.krivalar.com/OS-device-queue)
+- [_OS Process Scheduling_](https://www.tutorialspoint.com/operating_system/os_process_scheduling.htm)
 
 </br>
 </br>
 
 ## Simple Queue
-A `simple queue` is the most basic queue. In this `queue`, the `enqueue` operation takes place at the `rear`, while the `dequeue` operation takes place at the `front`. **This kind of queue has the limitation that when `rear` reaches the end of the queue you cannot `enqueue` more elements**
+A **simple queue** is the most basic queue. In this type of queue, the
+**enqueue** operation takes place at the `rear`, while the **dequeue**
+operation takes place at the `front`. This kind of queue has the
+limitation that when `rear` reaches the end of the queue you cannot
+**enqueue**  more elements**
 
 </br>
 
@@ -70,8 +71,8 @@ enqueue(7); // front = 1 / rear = 6
 </br>
 
 ## Circular Queue
-A `circular queue` is the extended version of a regular `queue` where the last element is connected to the first element.
-Thus forming a circle-like structure. **Another thing to point out is that a `circular queue` overcomes `simple queue` limitation**
+A **circular queue** is the extended version of a **regular queue** where the last element is connected to the first element.
+Thus forming a circle-like structure. Another thing to point out is that a **circular queue** overcomes the **simple queue** limitation.
 
 </br>
 
@@ -108,11 +109,18 @@ enqueue(50); // front = 0 / rear = 4
 </br>
 
 ## Priority Queue
-A `priority queue` is a type of `queue` that arranges elements based on their priority values. Elements with higher priority values are typically retrieved before elements with lower priority values.
+A **priority queue** is a type of queue that arranges elements based on
+their priority values. Elements with higher priority values are typically
+retrieved before elements with lower priority values.
 
-Types of `Priority Queue`:
-- **Ascending Order Priority Queue:** As the name suggests, in ascending order priority queue, the element with a lower priority value is given a higher priority in the priority list.
-- **Descending order Priority Queue:** In descending order priority queue, the element with a higher priority value is given a higher priority in the priority list.
+Types of Priority Queue:
+ - **Ascending Order Priority Queue:** As the name suggests, in ascending
+order priority queue, the element with a lower priority value is given
+a higher priority in the priority list.
+
+ - **Descending order Priority Queue:** In descending order priority queue,
+the element with a higher priority value is given a higher priority in
+the priority list.
 
 </br>
 
@@ -129,12 +137,12 @@ Types of `Priority Queue`:
 
 #define MAX 4
 
-struct Item {
-        int Value;
-        int Priority;
+struct item {
+        int value;
+        int priority;
 };
 
-struct Item queue[MAX];
+struct item queue[MAX];
 
 // Pointer to last inserted item
 int ptr  = -1;
@@ -155,11 +163,14 @@ enqueue(40, 5); // ptr = 3
 </br>
 
 ## Double Ended Queue
-`Double ended queues`, called `deques` for short, are a generalized form of the `queue`. It is exactly like a `queue` except that elements can be added to or removed from the `head` or the `tail`.
+**Double ended queues**, called **deques** for short, are a generalized
+form of the queue. It is exactly like a queue except that elements
+can be added to or removed from `front` or `rear`.
 
-Types of `deque`:
-- **Input Restricted Deque:** In this deque, input is restricted at a single end but allows deletion at both the ends.
-- **Output Restricted Deque:** In this deque, output is restricted at a single end but allows insertion at both the ends.
+Types of deque:
+ - **Input Restricted Deque:** In this deque, input is restricted at a single end but allows deletion at both the ends.
+
+ - **Output Restricted Deque:** In this deque, output is restricted at a single end but allows insertion at both the ends.
 
 </br>
 
@@ -204,7 +215,7 @@ enqueue_front(n); // front = 0 / rear = 5
 </br>
 
 ## Enqueue
-`Enqueue` operation consist in add an element to the `rear` of a `queue`.
+**Enqueue operation** consist in add an element to the `rear` of a queue.
 
 </br>
 
@@ -219,8 +230,7 @@ enqueue_front(n); // front = 0 / rear = 5
 ```c
 /* Simple Enqueue */
 
-void enqueue(int value)
-{
+void enqueue(int value) {
         if (is_full()) {
                 printf("Queue Is Full\n");
                 return;
@@ -237,7 +247,7 @@ void enqueue(int value)
 </br>
 
 ## Dequeue
-`Dequeue` operation consist in remove an element from `front`. So the next element in line can be attended. 
+**Dequeue operation** consist in remove an element from `front`. So the next element in line can be attended. 
 
 </br>
 
@@ -252,8 +262,7 @@ void enqueue(int value)
 ```c
 /* Simple Dequeue */
 
-void dequeue()
-{
+void dequeue() {
         if (is_empty()) {
                 printf("Queue Is Empty\n");
                 return;

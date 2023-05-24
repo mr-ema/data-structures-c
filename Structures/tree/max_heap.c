@@ -1,23 +1,15 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
+#include <stdlib.h>
+#include <stddef.h>
 
-/* MAX-HEAP DATA STRUCTURE */
 typedef struct MaxHeap {
-        int *Arr;
-        int Capacity;
-        size_t Size;
+        int *data;
+        size_t capacity;
+        size_t len;
 } MaxHeap;
 
 
-/**
- * Swaps the values of two integer variables.
- *
- * @param a Pointer to the first integer variable.
- * @param b Pointer to the second integer variable.
- */
-void xor_swap(int *a, int *b)
-{
+void xor_swap(int *a, int *b) {
         if (*a == *b)
                 return;
 
@@ -26,189 +18,130 @@ void xor_swap(int *a, int *b)
         *a ^= *b;
 }
 
-/**
- * Returns the index of the parent node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the parent node.
- */
-int parent(int index)
-{
-        return (index - 1) / 2;
+int parent_idx(int index) {
+        return ((index - 1) / 2);
 }
 
-/**
- * Returns the index of the left child node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the left child node.
- */
-int left_child(int index)
-{
+int left_child_idx(int index) {
         return (2 * index + 1);
 }
 
-/**
- * Returns the index of the right child node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the right child node.
- */
-int right_child(int index)
-{
+int right_child_idx(int index) {
         return (2 * index + 2);
 }
 
-/**
- * Initializes a Max Heap with the specified capacity.
- *
- * @param capacity The maximum number of elements the heap can hold.
- * @return A pointer to the initialized MaxHeap struct.
- *         Exits the program if memory allocation fails.
- */
-MaxHeap* maxheap_init(int capacity)
-{
+MaxHeap* maxheap_init(size_t capacity) {
         MaxHeap *heap = malloc(sizeof(MaxHeap));
         if (!heap) {
-                fprintf(stderr, "error: memory allocation failed");
+                fprintf(stderr, "error: memory allocation failed!\n");
                 exit(-1);
         }
 
-        heap->Arr = (int*)malloc(capacity * sizeof(int));
-        if (!(heap->Arr)) {
-                fprintf(stderr, "error: memory allocation failed");
+        heap->data = (int*)malloc(capacity * sizeof(int));
+        if (!(heap->data)) {
+                fprintf(stderr, "error: memory allocation failed!\n");
 
                 free(heap); // free previous allocated memory
                 exit(-1);
         }
 
-        heap->Size      = 0;
-        heap->Capacity  = capacity;
+        heap->len       = 0;
+        heap->capacity  = capacity;
 
         return heap;
 }
 
-/**
- * Deinitializes a Max Heap and frees the allocated memory.
- *
- * @param heap A double pointer to the MaxHeap struct.
- *             The pointer will be set to NULL after memory deallocation.
- */
-void maxheap_deinit(MaxHeap **heap)
-{
-        free((*heap)->Arr);     // Free the memory for the array
-        free(*heap);            // Free the memory for the MaxHeap struct
+void maxheap_deinit(MaxHeap **self) {
+        free((*self)->data); // Free the memory for the array
+        free(*self); // Free the memory for the MaxHeap struct
 
-        *heap = NULL;           // Set the heap pointer to NULL
+        *self = NULL; // Remove the pointer reference to the heap
 }
 
-/**
- * Retrieves the maximum element from the Max Heap without removing it.
- *
- * @param heap A pointer to the MaxHeap struct.
- * @return The maximum element in the Max Heap.
- */
-int maxheap_peek(MaxHeap *heap)
-{
-        return (heap->Arr[0]);
+size_t maxheap_len(const MaxHeap *self) {
+        return self->len;
 }
 
-/**
- * Restores the Max Heap property by moving the element at the given index up to its correct position.
- *
- * @param heap A pointer to the MaxHeap struct.
- * @param idx The index of the element to be heapified up.
- */
-void maxheap_heapify_up(MaxHeap *heap, size_t idx)
-{
-        int *arr = heap->Arr;
+int maxheap_is_empty(const MaxHeap *self) {
+        return (self->len <= 0);
+}
 
-        while (idx > 0 && arr[idx] > arr[parent(idx)]) {
-                xor_swap(&arr[idx], &arr[parent(idx)]);
-                idx = parent(idx);
+int maxheap_peek(const MaxHeap *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: heap is empty!\n");
+                return -1;
+        }
+
+        return (self->data[0]);
+}
+
+void maxheap_heapify_up(MaxHeap *self, size_t idx) {
+        int *heap = self->data;
+
+        while (idx > 0 && heap[idx] > heap[parent_idx(idx)]) {
+                xor_swap(&heap[idx], &heap[parent_idx(idx)]);
+                idx = parent_idx(idx);
         }
 }
 
-/**
- * Restores the Max Heap property by moving the element at the given index down to its correct position.
- *
- * @param heap A pointer to the MaxHeap struct.
- * @param idx The index of the element to be heapified down.
- */
-void maxheap_heapify_down(MaxHeap *heap, size_t idx)
-{
-        int *arr    = heap->Arr;
-        size_t size = heap->Size;
+void maxheap_heapify_down(MaxHeap *self, size_t idx) {
+        int *heap = self->data;
+        size_t len = self->len;
 
         while (1) {
-                size_t bigger   = idx;
-                size_t left     = left_child(idx);
-                size_t right    = right_child(idx);
+                size_t bigger = idx;
+                size_t left   = left_child_idx(idx);
+                size_t right  = right_child_idx(idx);
 
-                if (left < size && arr[left] > arr[bigger])
+                if (left < len && heap[left] > heap[bigger])
                         bigger = left;
 
-                if (right < size && arr[right] > arr[bigger])
+                if (right < len && heap[right] > heap[bigger])
                         bigger = right;
 
                 if (bigger == idx)
                         break;
 
-                xor_swap(&arr[idx], &arr[bigger]);
+                xor_swap(&heap[idx], &heap[bigger]);
                 idx = bigger;
         }
 }
 
-/**
- * Inserts a new key into the Max Heap.
- *
- * @param heap A pointer to the MaxHeap struct.
- * @param key The key to be inserted into the Max Heap.
- */
-void maxheap_insert(MaxHeap *heap, int key)
-{
-        if (heap->Capacity == heap->Size) {
-                fprintf(stderr, "overflow: could not insert key");
+void maxheap_insert(MaxHeap *self, int key) {
+        if (self->len >= self->capacity) {
+                fprintf(stderr, "overflow: could not insert key!\n");
                 return;
         }
 
-        size_t idx = heap->Size;
-        heap->Size++;
-        heap->Arr[idx] = key;
+        size_t idx = self->len;
+        self->len++;
+        self->data[idx] = key;
 
         // Maintain the max-heap property by swapping the element with its parent as long as necessary
-        maxheap_heapify_up(heap, idx);
+        maxheap_heapify_up(self, idx);
 }
 
-/**
- * Deletes the element at the specified index from the Max Heap.
- *
- * @param heap A pointer to the MaxHeap struct.
- * @param idx The index of the element to be deleted.
- */
-void maxheap_delete_idx(MaxHeap *heap, int idx)
-{
-        if (heap->Size <= 0) {
-                fprintf(stderr, "underflow: heap is empty");
+void maxheap_delete(MaxHeap *self, int idx) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to delete, the heap is empty!\n");
                 return;
-        } else if (idx >= heap->Size) {
-                fprintf(stderr, "invalid index: index is out of bounds");
+        } else if (idx >= self->len) {
+                fprintf(stderr, "invalid index: index is out of bounds!\n");
                 return;
         }
 
         // Swap the key at the given index with the last key in the heap
-        heap->Arr[idx] = heap->Arr[heap->Size - 1];
-        heap->Size--; // Decrease the size of the heap to remove the last key (key to be deleted)
+        self->data[idx] = self->data[self->len - 1];
+        self->len--; // Decrease the size of the heap to remove the last key (key to be deleted)
 
-        if (heap->Arr[idx] > heap->Arr[parent(idx)])
-                maxheap_heapify_up(heap, idx);
+        if (self->data[idx] > self->data[parent_idx(idx)])
+                maxheap_heapify_up(self, idx);
         else
-                maxheap_heapify_down(heap, idx);
+                maxheap_heapify_down(self, idx);
 }
 
 // Test
-int main()
-{
+int main() {
         MaxHeap* heap = maxheap_init(10);
 
         // Test inserting elements
@@ -217,27 +150,75 @@ int main()
         maxheap_insert(heap, 8);
         maxheap_insert(heap, 2);
         maxheap_insert(heap, 9);
-        assert(maxheap_peek(heap) == 9);
+
+        if (maxheap_peek(heap) == 9)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 5)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
 
         // Test deleting elements
-        maxheap_delete_idx(heap, 1); // Delete element at index 1 (value 8)
-        assert(maxheap_peek(heap) == 9);
+        maxheap_delete(heap, 1); // Delete element at index 1 (value 8)
 
-        maxheap_delete_idx(heap, 0); // Delete element at index 0 (value 9)
-        assert(maxheap_peek(heap) == 5);
+        if (maxheap_peek(heap) == 9)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 4)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
+
+        maxheap_delete(heap, 0); // Delete element at index 0 (value 9)
+
+        if (maxheap_peek(heap) == 5)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 3)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
 
         // Test inserting more elements
         maxheap_insert(heap, 12);
         maxheap_insert(heap, 6);
         maxheap_insert(heap, 10);
-        assert(maxheap_peek(heap) == 12);
+
+        if (maxheap_peek(heap) == 12)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 6)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
 
         // Test deleting elements
-        maxheap_delete_idx(heap, 2); // Delete element at index 2 (value 10)
-        assert(maxheap_peek(heap) == 12);
+        maxheap_delete(heap, 2); // Delete element at index 2 (value 10)
 
-        maxheap_delete_idx(heap, 0); // Delete element at index 0 (value 12)
-        assert(maxheap_peek(heap) == 6);
+        if (maxheap_peek(heap) == 12)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 5)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
+
+        maxheap_delete(heap, 0); // Delete element at index 0 (value 12)
+
+        if (maxheap_peek(heap) == 6)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 4)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
 
         // Test inserting elements in descending order
         maxheap_insert(heap, 9);
@@ -246,11 +227,25 @@ int main()
         maxheap_insert(heap, 6);
         maxheap_insert(heap, 5);
 
+        if (maxheap_peek(heap) == 9)
+            printf("maxheap_peek() passed\n");
+
+        if (maxheap_len(heap) == 9)
+            printf("maxheap_len() passed\n");
+
+        if (!maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
+
         // Test deleting all elements
-        while (heap->Size > 0) {
-                maxheap_delete_idx(heap, 0);
+        while (heap->len > 0) {
+            maxheap_delete(heap, 0);
         }
-        assert(heap->Size == 0);
+
+        if (maxheap_len(heap) == 0)
+            printf("maxheap_len() passed\n");
+
+        if (maxheap_is_empty(heap))
+            printf("maxheap_is_empty() passed\n");
 
         maxheap_deinit(&heap);
 

@@ -1,161 +1,147 @@
 #include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
 
-#include "queue.h"
-#include "acutest.h"
+typedef struct {
+        size_t rear;
+        size_t front;
 
-#define N 20
+        size_t len;
+        size_t capacity;
+        int *data;
+} Queue;
 
-int queue[N];
-int rear = -1;
-int front = -1;
 
-int is_full()
-{
-        return ((rear + 1) % N == front);
+Queue* queue_init(size_t capacity) {
+        Queue *queue = malloc(sizeof(Queue));
+        if (!queue) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        queue->data = (int*)malloc(capacity * sizeof(int));
+        if (!(queue->data)) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        queue->capacity = capacity;
+        queue->len = 0;
+
+        queue->front = 0;
+        queue->rear = 0;
+
+        return queue;
 }
 
-int is_empty()
-{
-        return (rear <= -1 && front <= -1);
+void queue_deinit(Queue **self) {
+        free((*self)->data);    // Deallocate queue elements
+        free(*self);            // Deallocate queue
+
+        *self = NULL; // Remove the pointer reference to the queue
 }
 
-int len()
-{
-        if (is_empty())
-                return 0;
-
-        if (rear < front)
-                return (N - front) + (rear + 1);
-
-        return (rear - front) + 1;
+size_t queue_len(Queue *self) {
+        return self->len;
 }
 
-void init()
-{
-        front = -1;
-        rear = -1;
+int queue_is_full(Queue *self) {
+        return (self->len >= self->capacity);
 }
 
-int peek()
-{
-        if (is_empty()) {
+int queue_is_empty(Queue *self) {
+        return (self->len <= 0);
+}
+
+int queue_peek(Queue *self) {
+        if (self->len <= 0)
+                return -1;
+
+        return self->data[self->front];
+}
+
+void queue_enqueue(Queue *self, int value) {
+        if (self->len >= self->capacity) {
+                fprintf(stderr, "error: fail to enqueue, queue is full!\n");
+                return;
+        }
+
+        self->data[self->rear] = value;
+        self->rear = (self->rear + 1) % self->capacity;
+        self->len++;
+}
+
+int queue_dequeue(Queue *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to dequeue, queue is empty!\n");
                 return -1;
         }
 
-        return queue[front];
+        int temp = self->data[self->front];
+
+        self->front = (self->front + 1) % self->capacity;
+        self->len--;
+
+        return temp;
 }
 
-void enqueue(int value)
-{
-        if (is_full()) {
-                // printf("Overflow Condition\n");
-                return;
-        } else if (is_empty()) {
-                front++;
-        } 
-
-        rear = (rear + 1) % N;
-        queue[rear] = value;
-}
-
-void dequeue()
-{
-        if (is_empty()) {
-                // printf("Underflow Condition\n");
-                return;
-        } else if (front == rear) {
-                front = -1;
-                rear = -1;
-                return;
-        }
-        front++;
-}
-
-void display()
-{
-        if (is_empty()) {
-                printf("Queue Is Empty\n");
+void queue_display(Queue *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "queue is empty!\n");
                 return;
         }
 
-        for (int i = front; i != rear; ) {
-                printf("|%d", queue[i]);
-                i = (i + 1) % N;
+        size_t i = self->front;
+        for (size_t len = self->len; len > 0; len--) {
+                printf("|%d", self->data[i]);
+                i = (i + 1) % self->capacity;
         }
-        printf("|%d|\n", queue[rear]);
+        printf("\n");
 }
 
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
+int main() {
+        Queue* queue = queue_init(5);
 
-void test_min_size()
-{
-        TEST_CHECK(N > 10);
-        TEST_MSG("N MUST BE GREATER THAN `10` TO EXECUTE TESTS");
+        // Test enqueueing elements
+        queue_enqueue(queue, 5);
+        queue_enqueue(queue, 3);
+        queue_enqueue(queue, 8);
+        queue_enqueue(queue, 2);
+        queue_enqueue(queue, 9);
+
+        printf("[01] %s\n", (queue_peek(queue) == 5)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[02] %s\n", (queue_len(queue) == 5)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[03] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+        printf("[04] %s\n", (queue_is_full(queue))      ? "queue_is_full()   [passed]" : "queue_is_full()  [failed]");
+
+        // Test dequeueing elements
+        printf("[05] %s\n", (queue_dequeue(queue) == 5) ? "queue_dequeue()   [passed]" : "queue_dequeue()  [failed]");
+        printf("[06] %s\n", (queue_peek(queue) == 3)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[07] %s\n", (queue_len(queue) == 4)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[08] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+        printf("[09] %s\n", (!queue_is_full(queue))     ? "queue_is_full()   [passed]" : "queue_is_full()  [failed]");
+
+        // Test enqueueing more elements
+        queue_enqueue(queue, 12);
+        queue_enqueue(queue, 6);
+
+        printf("[10] %s\n", (queue_peek(queue) == 3)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[11] %s\n", (queue_len(queue) == 5)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[12] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+        printf("[13] %s\n", (queue_is_full(queue))      ? "queue_is_full()   [passed]" : "queue_is_full()  [failed]");
+
+        // Test dequeueing elements
+        printf("[14] %s\n", (queue_dequeue(queue) == 3) ? "queue_dequeue()   [passed]" : "queue_dequeue()  [failed]");
+        printf("[15] %s\n", (queue_peek(queue) == 8)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[16] %s\n", (queue_len(queue) == 4)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[17] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+        printf("[18] %s\n", (!queue_is_full(queue))     ? "queue_is_full()   [passed]" : "queue_is_full()  [failed]");
+
+        // Test displaying the queue
+        printf("[19] %s", "expecting: |8|2|9|12 / result: ");
+        queue_display(queue);
+
+        queue_deinit(&queue);
+
+        return 0;
 }
-
-void test_enqueue()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue(2);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 2);
-
-        enqueue(3);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 3);
-
-        TEST_CASE("OVERFLOW");
-        for (int i = 0; i < N + 1; i++) {
-                enqueue(69);
-        }
-        TEST_CHECK(len() <= N);
-
-}
-
-void test_dequeue()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue(2);
-
-        dequeue();
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 1);
-
-        enqueue(3);
-
-        dequeue();
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 1);
-
-        dequeue();
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        dequeue();
-        TEST_CHECK(len() == 0);
-}
-
-TEST_LIST = {
-        { "QUEUE SIZE", test_min_size },
-
-        { "ENQUEUE", test_enqueue },
-        { "DEQUEUE", test_dequeue },
-
-        { NULL, NULL }
-};

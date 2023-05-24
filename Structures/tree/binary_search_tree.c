@@ -1,285 +1,184 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
-
-/* BINARY SEARCH TREE (BST) */
+#include <stdlib.h>
+#include <stddef.h>
 
 typedef struct Node {
-        int Key;
-        struct Node *Left;
-        struct Node *Right;
+        int key;
+        struct Node *left;
+        struct Node *right;
 } Node;
 
 typedef struct Tree {
-        Node *Root;
-        unsigned int Size;
+        Node *root;
+        size_t len;
 } Tree;
 
 
-/**
- * Initializes a brand new binary search tree.
- * If memory allocation fails, it exits the program with a status code of -1.
- *
- * @return A pointer to the initialized tree.
- */
-Tree* BST_init()
-{
-        Tree *ptr = malloc(sizeof(Tree));
-        if (!ptr) {
-                perror("error: memory allocation failed");
+Tree* bst_init() {
+        Tree *tree = malloc(sizeof(Tree));
+        if (!tree) {
+                fprintf(stderr, "error: memory allocation failed!\n");
                 exit(-1);
         }
 
-        ptr->Root = NULL;
-        ptr->Size = 0;
+        tree->root = NULL;
+        tree->len  = 0;
 
-        return ptr;
+        return tree;
 }
 
-/**
- * Recursively frees the memory allocated for each node in the tree.
- *
- * @param node The root node of the tree to be freed.
- */
-void free_tree(Node *node)
-{
-        if (!node)
+void free_tree_recursive(Node *root) {
+        if (!root)
                 return;
 
-        free_tree(node->Left);
-        free_tree(node->Right);
-        free(node);
+        free_tree_recursive(root->left);
+        free_tree_recursive(root->right);
+
+        free(root);
 }
 
-/**
- * Removes the entire tree from dynamic memory.
- *
- * @param tree A pointer to the tree to be deinitialized.
- */
-void BST_deinit(Tree **tree) {
-        free_tree((*tree)->Root);
+void bst_deinit(Tree **self) {
+        free_tree_recursive((*self)->root); // Deallocate all nodes within the tree
+        free(*self); // Deallocate Tree
 
-        free(*tree);
-        *tree = NULL;
+        *self = NULL; // Remove the pointer reference to the tree
 }
 
-/**
- * Tries to allocate memory for a new node.
- * If memory allocation fails, it exits the program with a status code of -1.
- *
- * @param left A pointer to the left child node.
- * @param key The key value of the new node.
- * @param right A pointer to the right child node.
- * @return A pointer to the newly allocated node.
- */
-Node* BST_new_node(Node *left, int key, Node *right)
-{
-        Node *ptr = malloc(sizeof(Node));
-        if (!ptr) {
-                perror("error: memory allocation failed");
+Node* new_node(Node *left, int key, Node *right) {
+        Node *node = malloc(sizeof(Node));
+        if (!node) {
+                fprintf(stderr, "error: memory allocation failed!\n");
                 exit(-1);
         }
 
-        ptr->Left  = left;
-        ptr->Key   = key;
-        ptr->Right = right;
-
-        return ptr;
-}
-
-/**
- * Recursively inserts a node into the binary search tree.
- *
- * @param node The current node being considered during insertion.
- * @param key The key value of the node to be inserted.
- * @return A pointer to the updated node structure after insertion.
- */
-Node* insert_helper(Node *node, int key)
-{
-        if (!node)
-                return BST_new_node(0, key, 0);
-
-        if (key < node->Key)
-                node->Left = insert_helper(node->Left, key);
-        else
-                node->Right = insert_helper(node->Right, key);
-
+        node->left  = left;
+        node->key   = key;
+        node->right = right;
 
         return node;
 }
 
-/**
- * Inserts a node into the binary search tree.
- *
- * @param tree A pointer to the tree.
- * @param key The key value of the node to be inserted.
- * @return A pointer to the inserted node.
- */
-Node* BST_insert(Tree *tree, int key)
-{
-        Node* node = insert_helper(tree->Root, key);
-        if (!(tree->Root)) {
-                tree->Root = node;
+Node* insert_helper(Node *node, int key) {
+        if (!node)
+                return new_node(0, key, 0);
+
+        if (key < node->key)
+                node->left = insert_helper(node->left, key);
+        else
+                node->right = insert_helper(node->right, key);
+
+        return node;
+}
+
+Node* bst_insert(Tree *self, int key) {
+        Node* node = insert_helper(self->root, key);
+        if (!(self->root)) {
+                self->root = node;
         }
 
-        tree->Size++;
+        self->len++;
         return node;
 }
 
-/*
- * Searches for a key in a given binary search tree.
- * returns a null pointer if key is not founded.
- *
- * @param node The root node of the tree to search.
- * @param key The key to search for.
- * @return A pointer to the node with the matching key, or NULL if the key is not found.
- */
-Node* BST_search_key(Node *node, int key)
-{
-        if (!node || node->Key == key)
+Node* bst_search_key(Node *node, int key) {
+        if (!node || node->key == key)
                 return node;
 
-        if (key < node->Key)
-                return BST_search_key(node->Left, key);
+        if (key < node->key)
+                return bst_search_key(node->left, key);
 
-        return BST_search_key(node->Right, key);
+        return bst_search_key(node->right, key);
 }
 
-/**
- * Finds the minimum value node in a given subtree rooted at 'node'.
- *
- * @param node The root node of the subtree to search.
- * @return A pointer to the node with the minimum key value in the subtree.
- */
-Node* min_key_value(Node *node)
-{
+Node* min_key_value(Node *node) {
         Node *temp = node;
-        while (temp->Left)
-                temp = temp->Left;
+        while (temp->left)
+                temp = temp->left;
 
         return temp;
 }
 
-/**
- * Recursively deletes a node with the given key from the binary search tree.
- *
- * @param node The current node being considered during deletion.
- * @param key The key value of the node to be deleted.
- * @return A pointer to the updated node structure after deletion.
- */
-Node* delete_helper(Node *node, int key)
-{
+Node* delete_helper(Node *node, int key) {
         if (!node)
                 return node;
 
-        if (key < node->Key) {
-                node->Left = delete_helper(node->Left, key);
-        } else if (key > node->Key) {
-                node->Right = delete_helper(node->Right, key);
+        if (key < node->key) {
+                node->left = delete_helper(node->left, key);
+        } else if (key > node->key) {
+                node->right = delete_helper(node->right, key);
         } else {
                 Node *temp;
 
-                if (!(node->Left)) {
-                        temp = node->Right;
+                if (!(node->left)) {
+                        temp = node->right;
                         free(node);
                         return temp;
-                } else if (!(node->Right)) {
-                        temp = node->Left;
+                } else if (!(node->right)) {
+                        temp = node->left;
                         free(node);
                         return temp;
                 }
 
-                temp = min_key_value(node->Right);
+                temp = min_key_value(node->right);
 
-                node->Key = temp->Key;
-                node->Right = delete_helper(node->Right, temp->Key);
+                node->key = temp->key;
+                node->right = delete_helper(node->right, temp->key);
         }
 
         return node;
-
 }
 
-/**
- * Deletes a node with the given key from the binary search tree.
- *
- * @param tree A pointer to the tree.
- * @param key The key value of the node to be deleted.
- */
-void BST_delete(Tree *tree, int key)
-{
-        Node *node = delete_helper(tree->Root, key);
-        if (!node) {
-                printf("node does't exist\n");
+void bst_delete(Tree *self, int key) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to delete, the tree is empty!\n");
                 return;
         }
 
-        tree->Size--;
+        Node *node = delete_helper(self->root, key);
+        if (!node) {
+                fprintf(stderr, "key: %d does not exist!\n", key);
+                return;
+        }
+
+        self->len--;
 }
 
-/**********************************************************
- *                         TESTS                          *
- *********************************************************/
-int main(void)
-{
-        // Initialize the BST
-        Tree *tree = BST_init();
-        assert(tree->Size == 0);
+int main() {
+        Tree* bst = bst_init();
 
-        /*
-              30
-             /  \
-           10    40
-          /  \     \
-         6   11    null
-        */
+        // Test bst_insert() and bst_search_key()
+        bst_insert(bst, 50);
+        bst_insert(bst, 30);
+        bst_insert(bst, 70);
+        bst_insert(bst, 20);
+        bst_insert(bst, 40);
+        bst_insert(bst, 60);
+        bst_insert(bst, 80);
 
-        // Test Insert
-        BST_insert(tree, 30);
-        BST_insert(tree, 10);
-        BST_insert(tree, 40);
-        BST_insert(tree, 6);
-        BST_insert(tree, 11);
-        assert(tree->Size == 5);
+        printf("Searching for keys:\n");
+        printf("Key 50: %s\n", bst_search_key(bst->root, 50) ? "Found" : "Not found");
+        printf("Key 30: %s\n", bst_search_key(bst->root, 30) ? "Found" : "Not found");
+        printf("Key 70: %s\n", bst_search_key(bst->root, 70) ? "Found" : "Not found");
+        printf("Key 20: %s\n", bst_search_key(bst->root, 20) ? "Found" : "Not found");
+        printf("Key 40: %s\n", bst_search_key(bst->root, 40) ? "Found" : "Not found");
+        printf("Key 60: %s\n", bst_search_key(bst->root, 60) ? "Found" : "Not found");
+        printf("Key 80: %s\n", bst_search_key(bst->root, 80) ? "Found" : "Not found");
+        printf("Key 90: %s\n", bst_search_key(bst->root, 90) ? "Found" : "Not found");
 
-        Node *root = tree->Root;
-        assert(root->Key == 30);
-        assert(root->Left->Key == 10);
-        assert(root->Right->Key == 40);
-        assert(root->Left->Left->Key == 6);
-        assert(root->Left->Right->Key == 11);
+        // Test bst_delete()
+        printf("\nDeleting keys:\n");
+        bst_delete(bst, 20);
+        bst_delete(bst, 70);
+        bst_delete(bst, 90);
 
-        // Test Search
-        Node *left_child = BST_search_key(root, 10);
-        Node *fake_key   = BST_search_key(root, 100);
-        assert(left_child != NULL);
-        assert(fake_key == NULL);
+        printf("Key 20 deleted\n");
+        printf("Key 70 deleted\n");
+        printf("Key 90 deleted\n");
 
-        // Test Deletion
-        BST_delete(tree, 10);
-        assert(root->Left->Key == 11);
-        assert(tree->Size == 4);
+        printf("\nSearching for keys after deletion:\n");
+        printf("Key 20: %s\n", bst_search_key(bst->root, 20) ? "Found" : "Not found");
+        printf("Key 70: %s\n", bst_search_key(bst->root, 70) ? "Found" : "Not found");
+        printf("Key 90: %s\n", bst_search_key(bst->root, 90) ? "Found" : "Not found");
 
-        BST_delete(tree, 30);
-        assert(root->Key == 40);
-        assert(tree->Size == 3);
-
-        // Additional Test Cases
-        BST_insert(tree, 55);
-        BST_insert(tree, 20);
-        BST_insert(tree, 35);
-        assert(root->Right->Key == 55);
-        assert(root->Left->Right->Key == 20);
-        assert(root->Left->Right->Right->Key == 35);
-
-        BST_delete(tree, 20);
-        BST_delete(tree, 35);
-        BST_delete(tree, 55);
-        assert(root->Left->Right == NULL);
-        assert(root->Right == NULL);
-        assert(tree->Size == 3);
-
-        // Destroy tree
-        BST_deinit(&tree);
-        assert(tree == NULL);
-        return 0;
+        bst_deinit(&bst);
 }

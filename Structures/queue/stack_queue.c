@@ -1,167 +1,130 @@
 #include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
 
-#include "queue.h"
-#include "acutest.h"
+#include "lib/stack.h"
 
-#define N 20
+DECLARE_STACK(Stack, int);
+typedef struct {
+        Stack *stack1;
+        Stack *stack2;
+} Queue;
 
-int stack[N];
-int temp_stack[N];
-int top = -1;
+Queue* queue_init(size_t capacity) {
+        Queue *queue = malloc(sizeof(Queue));
+        if (!queue) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
 
-/* ************* Stack Operations ************* */
-void push(int value)
-{
-        stack[++top] = value;
+        queue->stack1 = (Stack*)stack_init(capacity);
+        queue->stack2 = (Stack*)stack_init(capacity);
+
+        return queue;
 }
 
-int pop()
-{
-        return stack[top--];
+void queue_deinit(Queue **self) {
+        // Deallocate Stacks
+        stack_deinit(&(*self)->stack1);
+        stack_deinit(&(*self)->stack2);
+
+        free(*self); // Deallocate queue
+
+        *self = NULL; // Remove the pointer reference to the queue
 }
 
-/* ************* Queue ************* */
-int is_empty()
-{
-        return (top <= -1);
+size_t queue_len(const Queue *self) {
+        return stack_len(self->stack1);
 }
 
-int is_full()
-{
-        return (top >= N - 1);
+int queue_is_empty(const Queue *self) {
+        return stack_is_empty(self->stack1);
 }
 
-int len()
-{
-        return (top + 1);
-}
-
-void init()
-{
-        top = -1;
-}
-
-int peek()
-{
-        if (is_empty()) {
+int queue_peek(const Queue *self) {
+        if (stack_is_empty(self->stack1)) {
                 return -1;
         }
 
-        return stack[0];
+        return self->stack1->data[0];
 }
 
-void enqueue(int value)
-{
-        if (is_full()) {
-                // printf("Overflow Condition");
+void queue_enqueue(Queue *self, int value) {
+        if (stack_is_full(self->stack1)) {
+                fprintf(stderr, "error: fail to enqueue, queue is full!\n");
                 return;
         }
 
-        push(value);
+        stack_push(self->stack1, value);
 }
 
-void dequeue()
-{ 
-        if (is_empty()) {
-                // printf("Underflow Condition\n");
+int queue_dequeue(Queue *self) {
+        if (stack_is_empty(self->stack1)) {
+                fprintf(stderr, "error: fail to dequeue, queue is empty!\n");
+                return -1;
+        }
+
+        while (!stack_is_empty(self->stack1))
+                stack_push(self->stack2, stack_pop(self->stack1));
+
+        int rem_elem = stack_pop(self->stack2); // Remove the element
+        while (!stack_is_empty(self->stack2))
+                stack_push(self->stack1, stack_pop(self->stack2));
+
+        return rem_elem;
+}
+
+void queue_display(Queue *self) {
+        if (queue_is_empty(self)) {
+                fprintf(stderr, "queue is empty!\n");
                 return;
         }
 
-        int temp_top = -1;
-        int new_size = top - 1;
-
-        while (top > -1) {
-                temp_stack[++temp_top] = pop();
+        for (size_t i = 0; i < queue_len(self); i++) {
+                printf("|%d", self->stack1->data[i]);
         }
-        temp_top--;
-
-        while (top < new_size)
-                push(temp_stack[temp_top--]);        
+        printf("\n");
 }
 
-void display()
-{
-        if (is_empty()) {
-                printf("Queue is Empty\n");
-                return;
-        }
+int main() {
+        Queue* queue = queue_init(6);
 
-        for (int i = 0; i <= top; i++)
-                printf("|%d", stack[i]);
-        printf("|\n");
+        // Test enqueueing elements
+        queue_enqueue(queue, 5);
+        queue_enqueue(queue, 3);
+        queue_enqueue(queue, 8);
+        queue_enqueue(queue, 2);
+        queue_enqueue(queue, 9);
+
+        printf("[01] %s\n", (queue_peek(queue) == 5)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[02] %s\n", (queue_len(queue) == 5)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[03] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+
+        // Test dequeueing elements
+        printf("[04] %s\n", (queue_dequeue(queue) == 5) ? "queue_dequeue()   [passed]" : "queue_dequeue()  [failed]");
+        printf("[05] %s\n", (queue_peek(queue) == 3)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[06] %s\n", (queue_len(queue) == 4)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[07] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+
+        // Test enqueueing more elements
+        queue_enqueue(queue, 12);
+        queue_enqueue(queue, 6);
+
+        printf("[09] %s\n", (queue_peek(queue) == 3)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[10] %s\n", (queue_len(queue) == 6)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[11] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+
+        // Test dequeueing elements
+        printf("[14] %s\n", (queue_dequeue(queue) == 3) ? "queue_dequeue()   [passed]" : "queue_dequeue()  [failed]");
+        printf("[15] %s\n", (queue_peek(queue) == 8)    ? "queue_peek()      [passed]" : "queue_peek()     [failed]");
+        printf("[16] %s\n", (queue_len(queue) == 5)     ? "queue_len()       [passed]" : "queue_len()      [failed]");
+        printf("[17] %s\n", (!queue_is_empty(queue))    ? "queue_is_empty()  [passed]" : "queue_is_empty() [failed]");
+
+        // Test displaying the queue
+        printf("[18] %s", "expecting: |8|2|9|12|6 / result: ");
+        queue_display(queue);
+
+        queue_deinit(&queue);
+
+        return 0;
 }
-
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
-
-void test_min_size()
-{
-        TEST_CHECK(N > 10);
-        TEST_MSG("N MUST BE GREATER THAN `10` TO EXECUTE TESTS");
-}
-
-void test_enqueue()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue(2);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 2);
-
-        enqueue(3);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 3);
-
-        TEST_CASE("OVERFLOW");
-        for (int i = 0; i < N + 1; i++) {
-                enqueue(69);
-        }
-        TEST_CHECK(len() <= N);
-
-}
-
-void test_dequeue()
-{
-        init();
-
-        TEST_CHECK(is_empty());
-
-        enqueue(1);
-        TEST_CHECK(peek() == 1);
-        TEST_CHECK(len() == 1);
-
-        enqueue(2);
-
-        dequeue();
-        TEST_CHECK(peek() == 2);
-        TEST_CHECK(len() == 1);
-
-        enqueue(3);
-
-        dequeue();
-        TEST_CHECK(peek() == 3);
-        TEST_CHECK(len() == 1);
-
-        dequeue();
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        dequeue();
-        TEST_CHECK(len() == 0);
-}
-
-TEST_LIST = {
-        { "QUEUE SIZE", test_min_size },
-
-        { "ENQUEUE", test_enqueue },
-        { "DEQUEUE", test_dequeue },
-
-        { NULL, NULL }
-};

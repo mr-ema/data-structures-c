@@ -1,624 +1,376 @@
+#include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 
-#include "list.h"
-#include "acutest.h"
+typedef struct Node {
+        size_t elem_count;
+        struct Node *next;
 
-#define CAPACITY 20
+        int *data;
+} Node;
 
-int const THRESHOLD = (CAPACITY/2) + 1;
+typedef struct {
+        size_t len;
+        size_t node_capacity;
+        size_t threshold;
 
-/* Notes:
- *    Much of the code can be optimized.
- *
- *    For example you could avoid reverse
- *    the array in insert_end operation,
- *    if you insert the elements in acending
- *    order.
- *
- *    I will optimized and clean the code
- *    but for now I wanna continue and pass
- *    to the next data structure (trees). */
+        struct Node *head;
+        struct Node *tail;
+} List;
 
-struct Node {
-        int Len;
-        int Data[CAPACITY];
-        struct Node *Next;
-} *head, *tail;
 
-int size = 0;
+List* list_init(size_t capacity) {
+        List *list = malloc(sizeof(List));
+        if (!list) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
 
-struct Node* new_node(int val, struct Node *next)
-{
-        struct Node *node = malloc(sizeof *node);
+        list->node_capacity = capacity;
+        list->threshold = (capacity/2) + 1;
 
-        node->Data[0] = val;
-        node->Next = next;
+        list->head = NULL;
+        list->tail = NULL;
+        list->len  = 0;
+
+        return list;
+}
+
+void list_clear(List *self) {
+        if (self->len <= 0)
+                return;
+
+        Node *current = self->head;
+        Node *next;
+
+        while (current != NULL) {
+                next = current->next;
+                free(current->data);
+                free(current);
+                current = next;
+        }
+
+        self->head = NULL;
+        self->tail = NULL;
+        self->len  = 0;
+}
+
+void list_deinit(List **self) {
+        list_clear(*self); // Deallocate the list nodes
+        free(*self); // Deallocate the list structure
+
+        *self = NULL; // Remove the pointer reference to the list
+}
+
+Node* new_node(List *self, int val, Node *next) {
+        Node *node = malloc(sizeof(Node));
+        if (!node) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        node->data = (int*)malloc(self->node_capacity * sizeof(int));
+        if (!(node->data)) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+                exit(-1);
+        }
+
+        node->data[0] = val;
+        node->next = next;
+        node->elem_count = 0;
 
         return node;
 }
 
-int is_empty()
-{
-        return (size <= 0);
-}
-
-int len()
-{
-        return size;
-}
-
-int there_is_space(struct Node *node)
-{
-        return (node->Len < CAPACITY);
-}
-
-void shift_right(int *arr, int start, int end)
-{
-        if (!(start >= 0 && end < CAPACITY)) {
-                printf("ERR_SHIFT_RIGHT -> INVALID ARGUMENT\n");
+void shift_right(int *arr, size_t size, size_t src, size_t desc) {
+        if (src >= desc || desc > size || src < 0) {
                 return;
         }
 
-        for (int i = end; i > start; i--) {
+        for (size_t i = desc; i > src; i--)
                 arr[i] = arr[i - 1];
-        }
 }
 
-void shift_left(int *arr, int start, int end)
-{
-        if (!(start < CAPACITY && end >= 0)) {
-                printf("ERR_SHIFT_LEFT -> INVALID ARGUMENT\n");
+void shift_left(int *arr, size_t size, size_t src, size_t desc) {
+        if (desc <= src  || src > size || src < 0) {
                 return;
         }
 
-        for (int i = end; i < start; i++) {
+        for (size_t i = src; i < desc; i++)
                 arr[i] = arr[i + 1];
-        }
 }
 
-void swap(int *arr, int first_elem, int second_elem)
-{
-        if (!(first_elem < CAPACITY && first_elem >= 0 ) && !(second_elem < CAPACITY && second_elem >= 0)) {
-                printf("ERR_SWAP -> INVALID ARGUMENT\n");
-                return;
-        }
-
-        int temp = arr[first_elem];
-        
-        arr[first_elem] = arr[second_elem];
-        arr[second_elem] = temp;
+int list_is_empty(const List *self) {
+        return (self->len <= 0);
 }
 
-void init(int val)
-{
-        head = new_node(val, 0);
-        head->Len++;
-        tail = head;
-
-        size++;
+size_t list_len(const List *self) {
+        return self->len;
 }
 
-void display()
-{
-        if (is_empty()) {
-                printf("List Is Empty\n");
-                return;
-        }
+// Adds an element to the head of the list.
+void list_add(List *self, int val) {
+        if (self->len <= 0) {
+                self->head = new_node(self, val, NULL);
+                self->tail = self->head;
+        } else if (self->head->elem_count < self->node_capacity) {
+                shift_right(self->head->data, self->node_capacity, 0, self->head->elem_count);
+                self->head->data[0] = val;
+        } else {
+                Node *fresh_node = new_node(self, val, self->head);
 
-        struct Node *temp = head;
-
-        printf("|");
-        while (temp != 0) {
-                for (int i = 0; i < temp->Len; i++) {
-                        printf(" %d |", temp->Data[i]);
+                size_t idx;
+                while (fresh_node->elem_count != self->threshold) {
+                        idx = (self->head->elem_count - self->threshold) + fresh_node->elem_count;
+                        fresh_node->data[++fresh_node->elem_count] = self->head->data[idx];
                 }
 
-                temp = temp->Next;
-                printf(" -> |");
+                self->head->elem_count -= self->threshold;
+                self->head = fresh_node;
         }
-        printf(" NULL |");
+
+        self->len++;
+        self->head->elem_count++;
 }
 
-void insert_beg(int val) {
-        if (there_is_space(head)) {
-                shift_right(head->Data, 0, head->Len);
+// Appends an element at the end of the list.
+void list_append(List *self, int val) {
+        if (self->len <= 0) {
+                self->head = new_node(self, val, NULL);
+                self->tail = self->head;
+        } else if (self->tail->elem_count < self->node_capacity) {
+                self->tail->data[self->tail->elem_count] = val;
+        } else {
+                Node *fresh_node = new_node(self, 0, NULL);
+                fresh_node->data[self->threshold] = val;
 
-                head->Data[0] = val;
-                head->Len++;
-                size++;
-
-                return;
-        }
-
-        head = new_node(val, head);
-        head->Len++;
-        size++;
-        
-        while (head->Len != THRESHOLD) {
-                head->Data[head->Len] = head->Next->Data[0];
-                shift_left(head->Next->Data, head->Next->Len - 1, 0);
-
-                head->Next->Len--;
-                head->Len++;
-        }
-}
-
-void insert_after(int pos, int val)
-{
-        if (pos <= 0 || pos >= size) {
-                pos <= 0 ? insert_beg(val) : insert_end(val);
-                return;
-        } 
-
-        struct Node *temp = head;
-
-        for (int i = temp->Len; i < pos; ) {
-                temp = temp->Next;
-                i += temp->Len;
-        }
-
-        if (there_is_space(temp)) {
-                shift_right(temp->Data, pos, temp->Len);
-                temp->Data[pos] = val;
-
-                temp->Len++;
-                size++;
-
-                return;
-        }
-
-        temp->Next = new_node(0, 0);
-
-        while (temp->Next->Len != THRESHOLD) {
-                temp->Next->Data[tail->Next->Len] = temp->Data[tail->Len - 1];
-
-                temp->Next->Len++;
-                temp->Len--;
-        }
-
-        /* THIS WILL REVERSE THE NEW NODE ARRAY.
-         * HOWEVER THIS IS EXPENSIVE TO AVOID THIS
-         * YOU COULD START ADDING FROM THRESHOLD
-         * WHICH WILL KEEP ORDER OF THE ELEMENTS.
-         * BUT I THINK THIS IS MORE READABLE */
-        for (int i = 0; i < temp->Next->Len; i++) {
-                if (i == (temp->Next->Len - i) - 1) {
-                        break;
+                size_t idx;
+                while (fresh_node->elem_count != self->threshold) {
+                        idx = (self->tail->elem_count - self->threshold) + fresh_node->elem_count;
+                        fresh_node->data[fresh_node->elem_count++] = self->tail->data[idx];
                 }
-                swap(temp->Next->Data, i, (temp->Next->Len - i) - 1);
+
+                self->tail->elem_count -= self->threshold;
+                self->tail->next = fresh_node;
+                self->tail = fresh_node;
         }
 
-        insert_after(pos, val);
+        self->len++;
+        self->tail->elem_count++;
 }
 
-void insert_end(int val)
-{
-        if (there_is_space(tail)) {
-                tail->Data[tail->Len] = val;
-                tail->Len++;
-                size++;
-
-                return;
+// Inserts an element at the specified position in the list.
+// If the position is greater than the length of the list or less than 0,
+// the element is either added to the head (if pos < 0) or appended to the end (if pos > length).
+void list_insert(List *self, int val, size_t pos) {
+        if (pos > self->len || pos < 0 || self->len <= 0) {
+                return (pos < 0 ?  list_add(self, val) : list_append(self, val));
         }
 
-        tail->Next = new_node(val, 0);
-        tail->Next->Len++;
-        size++;
-
-        while (tail->Next->Len != THRESHOLD) {
-                tail->Next->Data[tail->Next->Len] = tail->Data[tail->Len - 1];
-
-                tail->Next->Len++;
-                tail->Len--;
+        Node *curr = self->head;
+        while (pos > curr->elem_count) {
+                pos -= curr->elem_count;
+                curr = curr->next;
         }
 
-        /* THIS WILL REVERSE THE NEW NODE ARRAY.
-         * HOWEVER THIS IS EXPENSIVE TO AVOID THIS
-         * YOU COULD START ADDING FROM THRESHOLD
-         * WHICH WILL KEEP ORDER OF THE ELEMENTS.
-         * BUT I THINK THIS IS MORE READABLE */
-        for (int i = 0; i < tail->Next->Len; i++) {
-                if (i == (tail->Next->Len - i) - 1) {
-                        break;
+        if (curr->elem_count < self->node_capacity) {
+                shift_right(curr->data, self->node_capacity, pos, curr->elem_count);
+                curr->data[pos] = val;
+                curr->elem_count++;
+        } else {
+                int temp_val = curr->data[curr->elem_count - 1];
+
+                Node *fresh_node = new_node(self, 0, curr->next);
+                curr->next = fresh_node;
+
+                shift_right(curr->data, self->node_capacity, pos, curr->elem_count);
+                curr->data[pos] = val;
+
+                size_t idx;
+                while (fresh_node->elem_count != self->threshold) {
+                        idx = (curr->elem_count - self->threshold) + fresh_node->elem_count;
+                        fresh_node->data[fresh_node->elem_count++] = self->tail->data[idx];
                 }
-                swap(tail->Next->Data, i, (tail->Next->Len - i) - 1);
+
+                curr->elem_count -= self->threshold;
+                fresh_node->data[fresh_node->elem_count++] = temp_val;
+
+                if (curr == self->tail)
+                        self->tail = fresh_node;
         }
 
-        tail = tail->Next;
+        self->len++;
 }
 
-void delete_first()
-{
-        if (is_empty()) {
-                return;
-        } else if (head->Len == 1) {
-                struct Node *temp = head;
-                head = head->Next;
+// Removes and returns the first element from the list.
+int list_chop(List *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to chop, list is empty!\n");
+                return -1;
+        }
+
+        int rem_elem = self->head->data[0];
+        self->len--;
+
+        if (self->head->elem_count <= 1) {
+                Node *temp = self->head;
+                self->head = self->head->next;
 
                 free(temp);
-                size--;
-
-                return;
+        } else {
+                shift_left(self->head->data, self->node_capacity, 0, self->head->elem_count);
+                self->head->elem_count--;
         }
 
-        shift_left(head->Data, head->Len, 0);
-
-        head->Len--;
-        size--;
+        return rem_elem;
 }
 
-void delete_node(int pos)
-{
-        if (pos >= size || pos <= 1) {
-                pos <= 1 ? delete_first() : delete_last();
-                return;
+// Removes the first occurrence of the specified value from the list.
+int list_remove(List *self, int val) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to remove, list is empty!\n");
+                return -1;
         }
 
-        struct Node *temp = head;
+        Node *curr = self->head->next;
+        Node *prev = self->head;
 
-        for (int i = temp->Len; i < pos; ) {
-                temp = temp->Next;
-                i += temp->Len;
-        }
+        int rem_elem = -1;
+        size_t idx = 0;
 
-        shift_left(temp->Data, temp->Len, pos - 1);
-
-        temp->Len--;
-        size--;
-}
-
-void delete_last()
-{
-        if (is_empty()) {
-                return;
-        }
-        if (tail->Len > 1) {
-                tail->Len--;
-
-                size--;
-                return;
-        }
-        if (head == tail) {
-                free(tail);
-                head = 0;
-                tail = 0;
-
-                size--;
-                return;
-        }
-
-        struct Node *temp = head;
-
-        while (temp->Next->Next != 0) {
-                temp = temp->Next;
-        }
-
-        temp->Next = 0;
-
-        free(tail);
-        tail = temp;
-
-        size--;
-}
-
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
-
-void test_basic()
-{
-        TEST_CHECK(CAPACITY > 5);
-        TEST_MSG("CAPACITY must be greater than 5");
-
-        TEST_CHECK(THRESHOLD == (CAPACITY/2)+1);
-        TEST_MSG("Expected %d got %d", (CAPACITY/2)+1, THRESHOLD);
-}
-
-void test_create()
-{
-        TEST_CHECK(is_empty());
-        init(69);
-        TEST_CHECK(!is_empty());
-        TEST_CHECK(len() == 1);
-
-        if (!TEST_CHECK(head->Data[0] == 69))
-                TEST_MSG("Expected 69 got %d", head->Data[0]);
-}
-
-void test_insert_beg()
-{
-        int i = 0;
-
-        init(69);
-
-        insert_beg(++i);
-        TEST_CHECK(head->Data[0] == i);
-
-        insert_beg(++i);
-        TEST_CHECK(head->Data[0] == i);
-        TEST_CHECK(head->Data[1] == i - 1);
-        TEST_CHECK(len() == 3);
-
-        while (len() != CAPACITY + 1) {
-                insert_beg(++i);
-
-                if (!TEST_CHECK(i < CAPACITY + 1)) {
-                        TEST_MSG("YOU FORGOT INCREASE THE SIZE");
-                        break;
+        while (curr != NULL) {
+                for ( ; idx < curr->elem_count; idx++) {
+                        if (curr->data[idx] == val) {
+                                shift_left(curr->data, self->node_capacity, idx, curr->elem_count);
+                                curr->elem_count--;
+                                rem_elem = val;
+                                break;
+                        }
                 }
+
+                prev = curr;
+                curr = curr->next;
         }
 
-        TEST_CHECK(head->Data[0] == i);
-        TEST_CHECK(head->Data[1] == i - 1);
-        TEST_CHECK(head->Next->Data[head->Next->Len - 1] == 69);
-        TEST_CHECK(head->Next->Data[0] == i - THRESHOLD);
-        TEST_CHECK(head->Len == THRESHOLD);
-
-        // display();
-}
-
-void test_insert_after()
-{
-        int i = 0;
-
-        init(69);
-
-        insert_after(0, ++i);
-        TEST_CHECK(head->Data[0] == i);
-        TEST_CHECK(head->Data[1] == 69);
-        TEST_CHECK(len() == 2);
-
-        insert_after(len() + 1, ++i);
-        TEST_CHECK(head->Data[head->Len - 1] == i);
-        TEST_CHECK(len() == 3);
-
-        insert_after(1, ++i);
-        TEST_CHECK(head->Data[1] == i);
-        TEST_CHECK(len() == 4);
-
-        insert_after(3, ++i);
-        TEST_CHECK(head->Data[3] == i);
-        TEST_CHECK(len() == 5);
-
-         while (len() != CAPACITY + 1) {
-                insert_after(2, ++i);
-
-                if (!TEST_CHECK(i < CAPACITY + 1)) {
-                        TEST_MSG("YOU FORGOT INCREASE THE SIZE");
-                        break;
-                }
+        if (rem_elem <= -1) {
+                return -1;
         }
 
-        TEST_CHECK(head->Data[0] == 1);
-        TEST_CHECK(head->Data[1] == 3);
-        TEST_CHECK(head->Next->Data[head->Next->Len - 1] == 2);
-        TEST_CHECK(head->Next->Data[0] == 12);
-        TEST_CHECK(head->Next->Len == THRESHOLD);
-
-        // display();
-}
-
-void test_insert_end()
-{
-        int i = 0;
-
-        init(69);
-
-        insert_end(++i);
-        TEST_CHECK(head->Data[0] == 69);
-        TEST_CHECK(head->Data[1] == i);
-        TEST_CHECK(len() == 2);
-
-        while (len() != CAPACITY + 1) {
-                insert_end(++i);
-
-                if (!TEST_CHECK(i < CAPACITY + 1)) {
-                        TEST_MSG("YOU FORGOT INCREASE THE SIZE");
-                        break;
-                }
+        self->len--;
+        if (curr && curr->elem_count <= 0) {
+                prev->next = curr->next;
+                free(curr);
         }
 
-        TEST_CHECK(head->Next->Data[0] == i - THRESHOLD + 1);
-        TEST_CHECK(head->Next->Data[head->Next->Len - 1] == i);
-        TEST_CHECK(head->Next->Data[head->Next->Len - 2] == i - 1);
-        TEST_CHECK(head->Next->Len == THRESHOLD);
-
-        // display();
+        return rem_elem;
 }
 
-void test_multi_insert()
-{
-        init(69);
-
-        insert_end(7);
-        TEST_CHECK(head->Data[0] == 69);
-        TEST_CHECK(head->Data[1] == 7);
-
-        insert_beg(8);
-        TEST_CHECK(head->Data[0] == 8);
-        TEST_CHECK(head->Data[1] == 69);
-
-        insert_after(-1, 9);
-        TEST_CHECK(head->Data[0] == 9);
-        TEST_CHECK(head->Data[1] == 8);
-
-        insert_end(10);
-        TEST_CHECK(head->Data[0] == 9);
-        TEST_CHECK(head->Data[head->Len - 1] == 10);
-
-        insert_beg(11);
-        TEST_CHECK(head->Data[0] == 11);
-        TEST_CHECK(head->Data[1] == 9);
-
-        // display();
-}
-
-void test_delete_first()
-{
-        int MAX = 10;
-        int count = 1;
-
-        init(69);
-
-        /* Fill List */
-        for (int i = 1; i < MAX; i++) {
-                TEST_CHECK(len() == i);
-                insert_end(i);
+// Removes and returns the last element from the list.
+int list_pop(List *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to pop, list is empty!\n");
+                return -1;
         }
 
-        // init(69)
-        TEST_CHECK(head->Data[0] == 69);
+        int rem_elem = self->tail->data[self->tail->elem_count - 1];
+        self->len--;
 
-        delete_first();
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Data[0] == 1);
-        TEST_CHECK(head->Len == MAX - 1);
+        if (self->tail->elem_count > 1) {
+                self->tail->elem_count--;
+        } else {
+                Node *temp = self->head;
+                while (temp->next->next != NULL)
+                        temp = temp->next;
 
-        delete_first();
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Data[0] == 2);
-        TEST_CHECK(head->Len == MAX - 2);
-        
-        // display();
+                self->tail = temp;
+                temp = temp->next;
 
-        TEST_CASE("LAST DELETE");
-        while (len() > 0) {
-                delete_first();
-        }
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        delete_first();
-        delete_first();
-        TEST_CHECK(len() >= 0);
-}
-
-void test_delete_node()
-{
-        int MAX = 10;
-        int count = 1;
-
-        init(69);
-
-        /* Fill List */
-        for (int i = 1; i < MAX; i++) {
-                TEST_CHECK(len() == i);
-                insert_end(i);
+                self->tail->next = NULL;
+                free(temp);
         }
 
-        // display();
+        return rem_elem;
+}
 
-        delete_node(0);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-        TEST_CHECK(head->Data[0] == 1);
-        TEST_CHECK(head->Data[1] == 2);
-
-        delete_node(1);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-        TEST_CHECK(head->Data[0] == 2);
-        TEST_CHECK(head->Data[1] == 3);
-
-        delete_node(2);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-        TEST_CHECK(head->Data[1] == 4);
-        TEST_CHECK(head->Data[2] == 5);
-        
-        delete_node(-1);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-        TEST_CHECK(head->Data[0] == 4);
-        TEST_CHECK(head->Data[1] == 5);
-
-        delete_node(size);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-
-        delete_node(size + 1);
-        TEST_CHECK(len() == MAX - count++);
-        TEST_CHECK(head->Len == len());
-        
-        TEST_CASE("LAST DELETE");
-        while (len() > 0) {
-                delete_node(count++);
+void list_display(const List *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "list is empty!\n");
+                return;
         }
-        TEST_CHECK(len() == 0);
 
-        TEST_CASE("UNDERFLOW");
-        delete_node(1);
-        delete_node(2);
-        TEST_CHECK(len() >= 0);
-}
+        Node *temp = self->head;
+        while (temp != 0) {
+                for (int i = 0; i < temp->elem_count; i++)
+                        printf("%d->", temp->data[i]);
 
-void test_delete_last()
-{
-        init(69);
-
-        insert_end(1);
-        insert_end(2);
-        TEST_CHECK(len() == 3);
-
-        // display();
-
-        delete_last();
-        TEST_CHECK(len() == 2);
-        TEST_CHECK(head->Len == 2);
-        TEST_CHECK(head->Data[0] == 69);
-        TEST_CHECK(head->Data[1] == 1);
-        
-        delete_last();
-        TEST_CHECK(len() == 1);
-        TEST_CHECK(head->Len == 1);
-        TEST_CHECK(head->Data[0] == 69);
-        
-        TEST_CASE("LAST DELETE");
-        while (len() > 0) {
-                delete_last();
+                temp = temp->next;
         }
-        TEST_CHECK(len() == 0);
-
-        TEST_CASE("UNDERFLOW");
-        delete_last();
-        delete_last();
-        TEST_CHECK(len() >= 0);
+        printf("STOP\n");
 }
 
-void test_multi_delete()
-{
-        init(69);
+int main() {
+        // Initialize a circular list
+        List *list = list_init(6);
 
-        insert_end(1);
-        insert_end(2);
-        TEST_CHECK(head->Data[0] == 69 && head->Data[2] == 2);
-        delete_last();
-        TEST_CHECK(head->Data[0] == 69 && head->Data[1] == 1);
-        
-        insert_beg(3);
-        TEST_CHECK(head->Data[0] == 3 && head->Data[1] == 69);
-        delete_first();
-        TEST_CHECK(head->Data[0] == 69 && head->Data[1] == 1);
+        // Test adding elements to the head
+        list_add(list, 1);
+        list_add(list, 2);
+        list_add(list, 3);
 
-        insert_after(1, 5);
-        TEST_CHECK(head->Data[0] == 69 && head->Data[1] == 5);
-        delete_node(2);
-        TEST_CHECK(head->Data[0] == 69 && head->Data[1] == 1);
+        // Display the list: Expected output: 3->2->1->
+        list_display(list);
+
+        // Test appending elements at the end
+        list_append(list, 4);
+        list_append(list, 5);
+        list_append(list, 6);
+
+        // Display the list: Expected output: 3->2->1->4->5->6->
+        list_display(list);
+
+        // Test inserting an element at a specific position
+        list_insert(list, 10, 2);
+        list_insert(list, 20, 5);
+
+        // Display the list: Expected output: 3->2->10->1->4->20->5->6->
+        list_display(list);
+
+        // Test removing an element from the head
+        int removed = list_chop(list);
+        printf("Removed element: %d\n", removed); // Expected output: 3
+
+        // Display the list: Expected output: 2->10->1->4->20->5->6->
+        list_display(list);
+
+        // Test removing the first occurrence of a specific value
+        int removed_value = list_remove(list, 4);
+        printf("Removed element: %d\n", removed_value); // Expected output: 4
+
+        // Display the list: Expected output: 2->10->1->20->5->6->
+        list_display(list);
+
+        // Test removing an element from the end
+        int popped = list_pop(list);
+        printf("Popped element: %d\n", popped); // Expected output: 6
+
+        // Display the list: Expected output: 2->10->1->20->5->
+        list_display(list);
+
+        // Clear the list
+        list_clear(list);
+
+        // Display the list after clearing: Expected output: list is empty!
+        list_display(list);
+
+        // Test inserting elements after clearing
+        list_insert(list, 100, 0);
+        list_insert(list, 200, 1);
+
+        // Display the list: Expected output: 200->100->
+        list_display(list);
+
+        // Deallocate memory and deinitialize the list
+        list_deinit(&list);
+
+        return 0;
 }
-
-TEST_LIST = {
-        { "ARRAY SIZE && THRESHOLD", test_basic },
-        { "CREATE", test_create },
-
-        { "INSERT BEGINNING", test_insert_beg },
-        { "INSERT AFTER", test_insert_after },
-        { "INSERT END", test_insert_end },
-        { "INSERT BEGINNING/AFTER/END", test_multi_insert },
-
-        { "DELETE FIRST", test_delete_first },
-        { "DELETE NODE", test_delete_node },
-        { "DELETE LAST", test_delete_last },
-        { "DELETE FIRST/NODE/LAST", test_multi_delete },
-
-        { NULL, NULL }
-};

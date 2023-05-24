@@ -1,23 +1,15 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
+#include <stdlib.h>
+#include <stddef.h>
 
-/* MIN-HEAP DATA STRUCTURE */
 typedef struct MinHeap {
-        int *Arr;
-        int Capacity;
-        size_t Size;
+        int *data;
+        size_t capacity;
+        size_t len;
 } MinHeap;
 
 
-/**
- * Swaps the values of two integer variables.
- *
- * @param a Pointer to the first integer variable.
- * @param b Pointer to the second integer variable.
- */
-void xor_swap(int *a, int *b)
-{
+void xor_swap(int *a, int *b) {
         if (*a == *b)
                 return;
 
@@ -26,222 +18,235 @@ void xor_swap(int *a, int *b)
         *a ^= *b;
 }
 
-/**
- * Returns the index of the parent node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the parent node.
- */
-int parent(int index)
-{
-        return (index - 1) / 2;
+int parent_idx(int index) {
+        return ((index - 1) / 2);
 }
 
-/**
- * Returns the index of the left child node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the left child node.
- */
-int left_child(int index)
-{
+int left_child_idx(int index) {
         return (2 * index + 1);
 }
 
-/**
- * Returns the index of the right child node of the given index.
- *
- * @param index The index of the current node.
- * @return The index of the right child node.
- */
-int right_child(int index)
-{
+int right_child_idx(int index) {
         return (2 * index + 2);
 }
 
-/**
- * Initializes a new minimum heap with the given capacity.
- * If memory allocation fails, it exits the program with a status code of -1.
- *
- * @param capacity The maximum number of elements the heap can hold.
- * @return A pointer to the newly created heap.
- */
-MinHeap* minheap_init(int capacity)
-{
+MinHeap* minheap_init(size_t capacity) {
         MinHeap *heap = malloc(sizeof(MinHeap));
         if (!heap) {
-                perror("error: memory allocation failed");
+                fprintf(stderr, "error: memory allocation failed!\n");
                 exit(-1);
         }
 
-        heap->Arr = (int*)malloc(capacity * sizeof(int));
-        if (!(heap->Arr)) {
-                perror("error: memory allocation failed");
+        heap->data = (int*)malloc(capacity * sizeof(int));
+        if (!(heap->data)) {
+                fprintf(stderr, "error: memory allocation failed!\n");
+
                 free(heap);
                 exit(-1);
         }
 
-        heap->Size      = 0;
-        heap->Capacity  = capacity;
+        heap->len       = 0;
+        heap->capacity  = capacity;
 
         return heap;
 }
 
-/**
- * Deallocates the memory used by a min heap.
- *
- * @param heap A pointer to the pointer of the min heap to be deallocated.
- */
-void minheap_deinit(MinHeap **heap)
-{
-        free((*heap)->Arr);     // Free the memory for the array
-        free(*heap);            // Free the memory for the MinHeap struct
+void minheap_deinit(MinHeap **self) {
+        free((*self)->data); // Free the memory for the array
+        free(*self); // Free the memory for the MinHeap struct
 
-        *heap = NULL;           // Set the heap pointer to NULL
+        *self = NULL; // Remove the pointer reference to the heap
 }
 
-/**
- * Returns the minimum key on a min heap.
- *
- * @param heap A pointer to the min heap structure.
- * @return The minimum key in the min heap.
- */
-int minheap_peek(MinHeap *heap)
-{
-        return (heap->Arr[0]);
+size_t minheap_len(const MinHeap *self) {
+        return self->len;
 }
 
-/**
- * Performs the "heapify up" operation to maintain the min heap property
- * after inserting an element at a specific index.
- *
- * @param arr The array representing the min heap.
- * @param idx The index of the element to be heapified.
- */
-void minheap_heapify_up(MinHeap *heap, size_t idx)
-{
-        int *arr = heap->Arr;
+int minheap_is_empty(const MinHeap *self) {
+        return (self->len <= 0);
+}
 
-        while (idx > 0 && arr[parent(idx)] > arr[idx]) {
-                xor_swap(&arr[idx], &arr[parent(idx)]);
-                idx = parent(idx);
+int minheap_peek(MinHeap *self) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: heap is empty!\n");
+                return -1;
+        }
+
+        return (self->data[0]);
+}
+
+void minheap_heapify_up(MinHeap *self, size_t idx) {
+        int *heap = self->data;
+
+        while (idx > 0 && heap[parent_idx(idx)] > heap[idx]) {
+                xor_swap(&heap[idx], &heap[parent_idx(idx)]);
+                idx = parent_idx(idx);
         }
 }
 
-/**
- * Performs the "heapify down" operation to maintain the min heap property
- * after deleting an element at a specific index.
- *
- * @param heap A pointer to the MinHeap structure.
- * @param idx  The index of the element to be heapified.
- */
-void minheap_heapify_down(MinHeap *heap, size_t idx)
-{
-        int *arr    = heap->Arr;
-        size_t size = heap->Size;
+void minheap_heapify_down(MinHeap *self, size_t idx) {
+        int *heap = self->data;
+        size_t len = self->len;
 
         while (1) {
                 size_t smallest = idx;
-                size_t left = left_child(idx);
-                size_t right = right_child(idx);
+                size_t left     = left_child_idx(idx);
+                size_t right    = right_child_idx(idx);
 
-                if (left < size && arr[left] < arr[smallest])
+                if (left < len && heap[left] < heap[smallest])
                         smallest = left;
 
-                if (right < size && arr[right] < arr[smallest])
+                if (right < len && heap[right] < heap[smallest])
                         smallest = right;
 
                 if (smallest == idx)
                         break;
 
-                xor_swap(&arr[idx], &arr[smallest]);
+                xor_swap(&heap[idx], &heap[smallest]);
                 idx = smallest;
-    }
+        }
 }
 
-/**
- * Inserts a new key into the min heap.
- *
- * @param heap A pointer to the minimum heap structure.
- * @param key The key to be inserted.
- */
-void minheap_insert(MinHeap *heap, int key)
-{
-        if (heap->Capacity == heap->Size) {
-                perror("overflow: could not insert key");
+void minheap_insert(MinHeap *self, int key) {
+        if (self->len >= self->capacity) {
+                fprintf(stderr, "overflow: could not insert key!\n");
                 return;
         }
 
-        size_t idx = heap->Size;
-        heap->Size++;
-        heap->Arr[idx] = key;
+        size_t idx = self->len;
+        self->len++;
+        self->data[idx] = key;
 
         // Maintain the min heap property by swapping the element with its parent as long as necessary
-        minheap_heapify_up(heap, idx);
+        minheap_heapify_up(self, idx);
 }
 
-/**
- * Deletes an element at the specified index from the MinHeap structure.
- *
- * @param heap Pointer to the MinHeap structure.
- * @param idx Index of the element to be deleted.
- */
-void minheap_delete_idx(MinHeap *heap, int idx)
-{
-        if (heap->Size <= 0) {
-                perror("underflow: heap is empty");
+void minheap_delete(MinHeap *self, int idx) {
+        if (self->len <= 0) {
+                fprintf(stderr, "error: fail to delete, the heap is empty!\n");
                 return;
-        } else if (idx >= heap->Size) {
-                perror("invalid index: index is out of bounds");
+        } else if (idx >= self->len) {
+                fprintf(stderr, "invalid index: index is out of bounds!\n");
                 return;
         }
 
-        heap->Arr[idx] = heap->Arr[heap->Size - 1];
-        heap->Size--;
+        // Swap the index of the key to be deleted with the index of the last key in the heap
+        self->data[idx] = self->data[self->len - 1];
+        self->len--; // delete last key (key to be delete)
 
-        if (idx == 0 || heap->Arr[idx] > heap->Arr[parent(idx)])
-                minheap_heapify_down(heap, idx);
+        if (idx == 0 || self->data[idx] > self->data[parent_idx(idx)])
+                minheap_heapify_down(self, idx);
         else
-                minheap_heapify_up(heap, idx);
+                minheap_heapify_up(self, idx);
 }
 
-// Test
-void run_tests()
-{
-    // Test minheap_init and minheap_peek
-    MinHeap* heap = minheap_init(5);
-    assert(heap != NULL);
-    assert(heap->Size == 0);
-    assert(heap->Capacity == 5);
+int main() {
+        MinHeap* heap = minheap_init(10);
 
-    minheap_insert(heap, 10);
-    minheap_insert(heap, 5);
-    minheap_insert(heap, 7);
-    minheap_insert(heap, 2);
-    minheap_insert(heap, 9);
-    printf("Insertion tests passed.\n");
+        // Test inserting elements
+        minheap_insert(heap, 5);
+        minheap_insert(heap, 3);
+        minheap_insert(heap, 8);
+        minheap_insert(heap, 2);
+        minheap_insert(heap, 9);
 
-    printf("Peek test passed.\n");
+        if (minheap_peek(heap) == 2)
+            printf("minheap_peek() passed\n");
 
-    // Test minheap_delete_idx
-    minheap_delete_idx(heap, 2);
-    assert(minheap_peek(heap) == 2);
-    printf("Delete test 1 passed.\n");
+        if (minheap_len(heap) == 5)
+            printf("minheap_len() passed\n");
 
-    minheap_delete_idx(heap, 0);
-    assert(minheap_peek(heap) == 5);
-    printf("Delete test 2 passed.\n");
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
 
-    // Test minheap_deinit
-    minheap_deinit(&heap);
-    assert(heap == NULL);
-    printf("Deallocation test passed.\n");
-}
+        // Test deleting elements
+        minheap_delete(heap, 1); // Delete element at index 1 (value 3)
 
-int main(int argc, char *argv[])
-{
-        run_tests();
-        printf("All tests passed successfully.\n");
+        if (minheap_peek(heap) == 2)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 4)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        minheap_delete(heap, 0); // Delete element at index 0 (value 2)
+
+        if (minheap_peek(heap) == 5)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 3)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        // Test inserting more elements
+        minheap_insert(heap, 12);
+        minheap_insert(heap, 6);
+        minheap_insert(heap, 10);
+
+        if (minheap_peek(heap) == 5)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 6)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        // Test deleting elements
+        minheap_delete(heap, 2); // Delete element at index 2 (value 10)
+
+        if (minheap_peek(heap) == 5)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 5)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        minheap_delete(heap, 0); // Delete element at index 0 (value 5)
+
+        if (minheap_peek(heap) == 6)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 4)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        // Test inserting elements in descending order
+        minheap_insert(heap, 9);
+        minheap_insert(heap, 8);
+        minheap_insert(heap, 7);
+        minheap_insert(heap, 6);
+        minheap_insert(heap, 5);
+
+        if (minheap_peek(heap) == 5)
+            printf("minheap_peek() passed\n");
+
+        if (minheap_len(heap) == 9)
+            printf("minheap_len() passed\n");
+
+        if (!minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        // Test deleting all elements
+        while (minheap_len(heap) > 0) {
+            minheap_delete(heap, 0);
+        }
+
+        if (minheap_len(heap) == 0)
+            printf("minheap_len() passed\n");
+
+        if (minheap_is_empty(heap))
+            printf("minheap_is_empty() passed\n");
+
+        minheap_deinit(&heap);
 
         return 0;
 }

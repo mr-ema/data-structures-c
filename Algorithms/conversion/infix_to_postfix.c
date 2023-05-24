@@ -1,35 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "acutest.h"
+#include "lib/stack.h"
+DECLARE_STACK(Stack, char);
 
-#define N 100
 
-char stack[N];
-int top = -1;
-
-void push(char value)
-{
-        top++;
-        stack[top] = value;
-}
-
-void pop()
-{
-        if (top <= -1) {
-                return;
-        }
-
-        top--;
-}
-
-int is_empty()
-{
-        return (top == -1);
-}
-
-int precedence(char operator)
-{
+int precedence(const char operator) {
         if (operator == '^')
                 return 3;
         if (operator == '*' || operator == '/')
@@ -40,106 +17,70 @@ int precedence(char operator)
         return 0;
 }
 
-int is_operator(char ch)
-{
+int is_operator(const char ch) {
         return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^' || ch == '(' || ch == ')');
 }
 
-int compare_presedence(char op_1, char op_2)
-{
-       return (precedence(op_1) > precedence(op_2));
-}
-
-int is_parentesis(char ch)
-{
+int is_parentesis(const char ch) {
         return (ch == '(' || ch == ')');
 }
 
-void watch(int i, int j, char *expression)
-{
-        printf("\n\e[0;36mSTEP: %22s[%d]\n", "", i);
-        printf("\e[0;32mTOP: %23s[%d]\n", "", top);
-        printf("STACK[TOP]: %16s\e[1m[%c]\n", "", stack[top]);
-        printf("\e[0;33mCURRENT_EXPRESSION_CHAR: %3s\e[1m[%c]\n\e[0m", "", expression[i]);
+char* infix_to_postfix(const char* expression, size_t size) {
+        Stack *stack = stack_init(size);
 
-        printf("\e[0;33mPOSTFIX: %19s", "");
-        for (int k = 0; k < j; k++) {
-                printf("\e[1m[%c]", expression[k]);
-        }
-        printf("\n\e[0m\n");
-}
+        char *result = (char*)malloc(size * sizeof(char));
+        char *result_ptr = result;
 
-void infix_to_postfix(char *expression, int len)
-{
-        int j = 0;
-
-        for (int i = 0; expression[i] != '\0'; i++) {
-                // remove comment to watch stack
-                // watch(i, j, expression);
-                if (stack[top] == ')') {
-                        while (stack[top] != '(' && !is_empty()) {
-                                pop();
-                                if (stack[top] == '(') {
-                                        pop(); // get rid of parentesis
-                                        break;
-                                }
-                                expression[j++] = stack[top];
+        for ( ; *expression != '\0'; expression++) {
+                if (!is_operator(*expression)) {
+                        *result_ptr++ = *expression;
+                } else if (*expression == '(') {
+                        stack_push(stack, *expression);
+                } else if (*expression == ')') {
+                         while (stack_peek(stack) != '(') {
+                                *result_ptr++ = stack_pop(stack);
                         }
-                }
-
-                if (!is_operator(expression[i])) {
-                                expression[j++] = expression[i];
-                                continue;
-                }
-
-                if (compare_presedence(expression[i], stack[top]) || is_parentesis(expression[i])) {
-                        push(expression[i]);
+                        stack_pop(stack); // Pop '(' from the stack
                 } else {
-                        while (precedence(expression[i]) <= precedence(stack[top]) && !is_empty()) {
-                                expression[j++] = stack[top];
-                                pop();
-                        }
-                        push(expression[i]);
+                        while (precedence(stack_peek(stack)) >= precedence(*expression))
+                                *result_ptr++ = stack_pop(stack);
+                        stack_push(stack, *expression);
                 }
         }
 
-        // clean stack
-        while (!is_empty()) {
-                expression[j++] = stack[top];
-                pop();
+        // Clear the stack
+        while (!stack_is_empty(stack)) {
+                *result_ptr++ = stack_pop(stack);
         }
-        expression[j] = '\0';
+
+        *result_ptr = '\0';
+        stack_deinit(&stack);
+
+        return result;
 }
 
-/****************************************************** 
- *                       TESTS                        *
- ******************************************************/
-
-void test_stack_size()
-{
-        TEST_CHECK(N >= 20);
-        TEST_MSG("EXPECTED N TO AT LEAST 20 BUT GOT %d", N);
-}
-
-void test_infix_to_postfix()
-{
+int main(void) {
         char t1[] = "x^y/(5*z)+2";
-        infix_to_postfix(t1, sizeof(t1) - 1);
+        char* result1 = infix_to_postfix(t1, sizeof(t1) - 1);
 
-        TEST_CHECK(strcmp(t1,"xy^5z*/2+") == 0);
-        TEST_MSG("EXPECTED xy^5z*/2+ GOT %s", t1);
+        if (strcmp(result1, "xy^5z*/2+") == 0) {
+                printf("TEST PASS: %s\n", result1);
+        } else {
+                printf("TEST FAILED: EXPECTED xy^5z*/2+ GOT %s\n", result1);
+        }
 
-        /* --------------- CASE_2 ---------------------- */
-        char t2[] = "k+l-m*n+(o^p)*w/u/v*t+q";  
-        infix_to_postfix(t2, sizeof(t2) - 1);
+        free(result1);
 
-        TEST_CHECK(strcmp(t2,"kl+mn*-op^w*u/v/t*+q+") == 0);
-        TEST_MSG("EXPECTED kl+mn*-op^w*u/v/t*+q+ GOT %s", t2);
+        char t2[] = "k+l-m*n+(o^p)*w/u/v*t+q";
+        char* result2 = infix_to_postfix(t2, sizeof(t2) - 1);
+
+        if (strcmp(result2, "kl+mn*-op^w*u/v/t*+q+") == 0) {
+                printf("TEST PASS: %s\n", result2);
+        } else {
+                printf("TEST FAILED: EXPECTED kl+mn*-op^w*u/v/t*+q+ GOT %s\n", result2);
+        }
+
+        free(result2);
+
+        return 0;
 }
-
-TEST_LIST = {
-        { "STACK SIZE", test_stack_size },
-        { "INFIX TO POSTFIX", test_infix_to_postfix },
-
-        { NULL, NULL }
-};
