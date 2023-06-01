@@ -16,7 +16,7 @@ stability, and suitability for different types and sizes of data.
 </br>
 
 ## Resources
-- _GeeksforGeeks_ - Bubble Sort -> [Youtube Video](https://www.youtube.com/watch?v=nmhjrI-aW5o)
+- [_GeeksforGeeks_ - Bubble Sort (Video)](https://www.youtube.com/watch?v=nmhjrI-aW5o)
 
 </br>
 </br>
