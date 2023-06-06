@@ -11,6 +11,7 @@ stability, and suitability for different types and sizes of data.
 
 ## Navigation
 - [Bubble Sort](#bubble-sort)
+- [Quicksort](#quicksort)
 
 </br>
 </br>
@@ -36,3 +37,25 @@ Imagine you have a row of numbers that are not in the correct order, and you wan
 5. Keep going until you reach the end of the row. By this point, the largest number will have "bubbled up" to the rightmost position.
 6. Repeat steps 1-5 for the remaining unsorted part of the row, excluding the last element that you already sorted.
 7. Keep repeating this process until the entire row is sorted.
+
+</br>
+</br>
+
+## Quicksort
+Quicksort is a widely used sorting algorithm that follows the divide-and-conquer approach. It
+works by selecting a pivot element from the array and partitioning the other elements into two
+sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays
+are then recursively sorted.
+
+Here's a step-by-step explanation of the Quicksort algorithm:
+
+1. Choose a pivot element from the array.
+2. Partition the array into two sub-arrays:
+   - Elements less than the pivot are placed to the left.
+   - Elements greater than the pivot are placed to the right.
+3. Recursively apply the above steps to the sub-arrays.
+   - Choose a pivot for each sub-array.
+   - Partition the sub-array into two sub-arrays.
+   - Repeat until the sub-arrays have size 0 or 1.
+4. The recursion terminates when the entire array is sorted.
+
