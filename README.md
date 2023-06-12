@@ -1,5 +1,5 @@
 # Algorithms And Data Structures In C
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 
 I'm learning data structures and algorithms so here you can find some
 basic `C` implementation along with graphics of it. Also I will be
