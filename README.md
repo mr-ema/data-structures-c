@@ -35,7 +35,6 @@ leaving some resources in case you want to go deeper.
 - [Stack](./Structures/stack#stack---linear-data-structure)
 - [Queue](./Structures/queue#queue---linear-data-structure)
 
-
 </br>
 
 ## Nonlinear Data Structures
@@ -47,5 +46,16 @@ leaving some resources in case you want to go deeper.
 ## Conversion Algorithms
 - [Infix To Postfix](./Algorithms/conversion/infix_to_postfix.c)
 - [Infix To Prefix](./Algorithms/conversion/infix_to_prefix.c)
+
+</br>
+
+## Sorting Algorithms
+- [Bubble Sort](./Algorithms/sorting/bubble_sort.c)
+- [Quicksort](./Algorithms/sorting/quicksort.c)
+
+</br>
+
+## Compression Algorithms
+- [RLE8](./Algorithms/compression/RLE.c)
 
 </br>
