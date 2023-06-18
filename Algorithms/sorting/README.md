@@ -10,6 +10,7 @@ stability, and suitability for different types and sizes of data.
 </br>
 
 ## Navigation
+- [Selection Sort](#selection-sort)
 - [Bubble Sort](#bubble-sort)
 - [Quicksort](#quicksort)
 
@@ -18,6 +19,27 @@ stability, and suitability for different types and sizes of data.
 
 ## Resources
 - [_GeeksforGeeks_ - Bubble Sort (Video)](https://www.youtube.com/watch?v=nmhjrI-aW5o)
+
+</br>
+</br>
+
+## Selection Sort
+Selection sort is a simple sorting algorithm that works by repeatedly
+finding the minimum element from the unsorted part of the list and
+placing it at the beginning. This process is repeated until the entire
+list is sorted.
+
+Imagine you have a row of numbers that are not in the correct order,
+and you want to sort them using selection sort. Here's how it works:
+
+1. Start at the beginning of the row.
+2. Find the minimum element in the unsorted part of the row.
+3. Swap the minimum element with the first element of the unsorted part.
+4. Move to the next position in the row (the second position now) and repeat steps 2 and 3.
+5. Continue this process, finding the minimum element from the remaining unsorted part and swapping it with the next position in the row.
+6. Keep going until you reach the end of the row. By this point, the smallest element will have been placed in the first position of the row.
+7. Repeat steps 2-6 for the remaining unsorted part of the row, excluding the first element that you already sorted.
+8. Keep repeating this process until the entire row is sorted.
 
 </br>
 </br>
