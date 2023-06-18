@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stddef.h>
 
 void xor_swap(int *x, int *y) {
         if (*x == *y)
