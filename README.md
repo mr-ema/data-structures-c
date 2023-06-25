@@ -50,7 +50,9 @@ leaving some resources in case you want to go deeper.
 </br>
 
 ## Sorting Algorithms
+- [Selection sort](./Algorithms/sorting/selection_sort.c)
 - [Bubble Sort](./Algorithms/sorting/bubble_sort.c)
+- [Insertion Sort](./Algorithms/sorting/insertion_sort.c)
 - [Quicksort](./Algorithms/sorting/quicksort.c)
 
 </br>
