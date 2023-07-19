@@ -68,8 +68,8 @@ void arr_insert_at_pos(int pos, int val) {
         }
 
         // Move elements from the left to the right
-        for (int i = arr_len() + 1; i > pos; i--)
-                arr[i] = arr[i-1];
+        for (int i = arr_len(); i > pos; i--)
+                arr[i] = arr[i - 1];
 
         // Over-write element at given position
         arr[pos] = val;
