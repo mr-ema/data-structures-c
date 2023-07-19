@@ -75,8 +75,38 @@ int arraylist_get(ArrayList *self, size_t pos) {
         return self->elems[pos];
 }
 
+void arraylist_insert(ArrayList *self, int val, size_t pos) {
+        if (pos > self->len) {
+                fprintf(stderr, "error: index out of bounds!\n");
+                return;
+        } else if (self->len == self->capacity) {
+                // don't add the new element if resize fails
+                if (!arraylist_resize(self)) return;
+        }
+
+        // shift elems
+        for (size_t i = self->len; i > pos; i--) {
+                self->elems[i] = self->elems[i - 1];
+        }
+
+        self->elems[pos] = val;
+        self->len++;
+}
+
 int main() {
         ArrayList *arrlist = arraylist_init(1);
+
+        {
+                int val_to_insert = 20;
+                size_t pos_to_insert = 0;
+                printf("Inserting value %d at position %zu\n", val_to_insert, pos_to_insert);
+                arraylist_insert(arrlist, val_to_insert, pos_to_insert);
+
+                printf("Elements in the array list after insertion: ");
+                for (int i = 0; i < arrlist->len; i++)
+                        printf("%d ", arraylist_get(arrlist, i));
+                printf("\n");
+        }
 
         arraylist_append(arrlist, 1);
         arraylist_append(arrlist, 2);
@@ -86,6 +116,19 @@ int main() {
         for (int i = 0; i < arrlist->len; i++)
                 printf("%d ", arraylist_get(arrlist, i));
         printf("\n");
+
+        {
+                // Test arraylist_insert
+                int val_to_insert = 100;
+                size_t pos_to_insert = 1;
+                printf("Inserting value %d at position %zu\n", val_to_insert, pos_to_insert);
+                arraylist_insert(arrlist, val_to_insert, pos_to_insert);
+
+                printf("Elements in the array list after insertion: ");
+                for (int i = 0; i < arrlist->len; i++)
+                        printf("%d ", arraylist_get(arrlist, i));
+                printf("\n");
+        }
 
         // Test arraylist_pop
         int removedElement = arraylist_pop(arrlist);
