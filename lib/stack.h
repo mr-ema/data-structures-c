@@ -55,100 +55,100 @@
 
 #define nil 0
 
-#define DECLARE_STACK(typename, type) \
-        typedef struct { \
-                size_t top; \
-                size_t len; \
-                size_t capacity; \
-                type *data; \
-        } typename; \
-\
-\
+#define DECLARE_STACK(typename, type)   \
+        typedef struct {                \
+                size_t top;             \
+                size_t len;             \
+                size_t capacity;        \
+                type *data;             \
+        } typename;                     \
+                                        \
+                                        \
 /* Initializes a new stack with the specified capacity and returns a pointer to the stack. */ \
-typename* stack_init(size_t capacity) { \
-        typename* stack = malloc(sizeof(typename)); \
-        if (!stack) { \
-                fprintf(stderr, "error: memory allocation failed!\n"); \
-                exit(-1); \
-        } \
-\
-        stack->data = (type*)malloc(capacity * sizeof(type)); \
-        if (!(stack->data)) { \
-                fprintf(stderr, "error: memory allocation failed!\n"); \
-\
-                free(stack); \
-                exit(-1); \
-        } \
-\
-        stack->capacity = capacity; \
-        stack->len      = 0; \
-        stack->top      = 0; \
-\
-        return stack; \
-} \
-\
+typename* stack_init(size_t capacity) {                                 \
+        typename* stack = malloc(sizeof(typename));                     \
+        if (!stack) {                                                   \
+                fprintf(stderr, "error: memory allocation failed!\n");  \
+                exit(-1);                                               \
+        }                                                               \
+                                                                        \
+        stack->data = (type*)malloc(capacity * sizeof(type));           \
+        if (!(stack->data)) {                                           \
+                fprintf(stderr, "error: memory allocation failed!\n");  \
+                                                                        \
+                free(stack);                                            \
+                exit(-1);                                               \
+        }                                                               \
+                                                                        \
+        stack->capacity = capacity;                                     \
+        stack->len      = 0;                                            \
+        stack->top      = 0;                                            \
+                                                                        \
+        return stack;                                                   \
+}                                                                       \
+                                                                        \
 /* Deinitializes the stack and frees the allocated memory. Sets the stack pointer to nil. */ \
-void stack_deinit(typename **stack) { \
-        free((*stack)->data); \
-        free(*stack); \
-\
-        *stack = (typename *)0;\
-}\
-\
+void stack_deinit(typename **stack) {   \
+        free((*stack)->data);           \
+        free(*stack);                   \
+                                        \
+        *stack = (typename *)0;         \
+}                                       \
+                                        \
 /* Checks if the stack is empty. Returns 1 if the stack is empty, 0 otherwise. */ \
-int stack_is_empty(const typename *stack) { \
-        return (stack->len <= 0); \
-} \
-\
+int stack_is_empty(const typename *stack) {     \
+        return (stack->len <= 0);               \
+}                                               \
+                                                \
 /* Checks if the stack is full. Returns 1 if the stack is full, 0 otherwise. */ \
-int stack_is_full(const typename *stack) { \
+int stack_is_full(const typename *stack) {      \
         return (stack->len >= stack->capacity); \
-} \
-\
+}                                               \
+                                                \
 /* Returns the number of elements currently in the stack. */ \
-size_t stack_len(const typename *stack) { \
-        return stack->len; \
-} \
-\
+size_t stack_len(const typename *stack) {       \
+        return stack->len;                      \
+}                                               \
+                                                \
 /* Retrieves the element at the top of the stack without removing it. \
  * Returns the top element if the stack is not empty, nil otherwise. */ \
-type stack_peek(const typename *stack) { \
-        if (stack->len <= 0) { \
-                return nil; \
-        } \
-\
-        return stack->data[stack->top]; \
-} \
-\
+type stack_peek(const typename *stack) {        \
+        if (stack->len <= 0) {                  \
+                return nil;                     \
+        }                                       \
+                                                \
+        return stack->data[stack->top];         \
+}                                               \
+                                                \
 /* Adds a new element to the top of the stack. \
  * If the stack is full, an error message is printed to stderr and no element is added. */ \
-void stack_push(typename *stack, type val) { \
-        if (stack->len >= stack->capacity) { \
-                fprintf(stderr, "error: push fail, stack is full!\n"); \
-                return; \
-        } \
-\
-        if (stack->len > 0) { \
-                stack->top++; \
-        } \
-\
-        stack->data[stack->top] = val; \
-        stack->len++; \
-} \
-\
+void stack_push(typename *stack, type val) {                            \
+        if (stack->len >= stack->capacity) {                            \
+                fprintf(stderr, "error: push fail, stack is full!\n");  \
+                return;                                                 \
+        }                                                               \
+                                                                        \
+        if (stack->len > 0) {                                           \
+                stack->top++;                                           \
+        }                                                               \
+                                                                        \
+        stack->data[stack->top] = val;                                  \
+        stack->len++;                                                   \
+}                                                                       \
+                                                                        \
 /* Removes and returns the element from the top of the stack. \
  * If the stack is empty, an error message is printed to stderr and nil is returned. */ \
-type stack_pop(typename *stack) { \
-        if (stack->len-- <= 0) { \
-                fprintf(stderr, "error: pop fail, stack is empty!\n"); \
-                return nil; \
-        } \
-\
-        if (stack->len <= 0) { \
-                return stack->data[stack->top]; \
-        }; \
-\
-        return stack->data[stack->top--]; \
-}\
+type stack_pop(typename *stack) {                                       \
+        if (stack->len-- <= 0) {                                        \
+                fprintf(stderr, "error: pop fail, stack is empty!\n");  \
+                return nil;                                             \
+        }                                                               \
+                                                                        \
+        if (stack->len <= 0) {                                          \
+                return stack->data[stack->top];                         \
+        };                                                              \
+                                                                        \
+        return stack->data[stack->top--];                               \
+}                                                                       \
 
 #endif /* STACK_H */
