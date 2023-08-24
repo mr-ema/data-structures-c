@@ -22,6 +22,8 @@ Deque* deque_init(size_t capacity) {
         deque->data = (int*)malloc(capacity * sizeof(int));
         if (!(deque->data)) {
                 fprintf(stderr, "error: memory allocation failed!\n");
+
+                free(deque);
                 exit(-1);
         }
 

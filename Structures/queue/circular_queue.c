@@ -22,6 +22,8 @@ Queue* queue_init(size_t capacity) {
         queue->data = (int*)malloc(capacity * sizeof(int));
         if (!(queue->data)) {
                 fprintf(stderr, "error: memory allocation failed!\n");
+
+                free(queue);
                 exit(-1);
         }
 

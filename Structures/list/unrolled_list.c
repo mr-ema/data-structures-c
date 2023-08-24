@@ -72,6 +72,8 @@ Node* new_node(List *self, int val, Node *next) {
         node->data = (int*)malloc(self->node_capacity * sizeof(int));
         if (!(node->data)) {
                 fprintf(stderr, "error: memory allocation failed!\n");
+
+                free(node);
                 exit(-1);
         }
 

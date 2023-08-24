@@ -20,6 +20,8 @@ ArrayList* arraylist_init(size_t initial_capacity) {
         arr->elems = (int*)malloc(initial_capacity * sizeof(int));
         if (!(arr->elems)) {
                 fprintf(stderr, "error: memory allocation failed!\n");
+
+                free(arr);
                 exit(-1);
         }
 
