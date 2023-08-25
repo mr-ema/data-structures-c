@@ -1,4 +1,4 @@
-# Linked List - Linear data Structure
+# Linked List - Linear Data Structure
 A **Linked List** can be defined as collection of objects called **nodes** that are randomly stored in **heap memory**.
 
 </br>
