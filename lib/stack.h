@@ -75,7 +75,6 @@ typename* stack_init(size_t capacity) {                                 \
         stack->data = (type*)malloc(capacity * sizeof(type));           \
         if (!(stack->data)) {                                           \
                 fprintf(stderr, "error: memory allocation failed!\n");  \
-                                                                        \
                 free(stack);                                            \
                 exit(-1);                                               \
         }                                                               \

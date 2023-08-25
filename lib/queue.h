@@ -77,6 +77,7 @@ typename* queue_init(size_t capacity) {                                 \
         queue->data = (type*)malloc(capacity * sizeof(type));           \
         if (!(queue->data)) {                                           \
                 fprintf(stderr, "error: memory allocation failed!\n");  \
+                free(queue);                                            \
                 exit(-1);                                               \
         }                                                               \
                                                                         \
