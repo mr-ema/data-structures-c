@@ -40,6 +40,7 @@ leaving some resources in case you want to go deeper.
 ## Nonlinear Data Structures
 - [Tree](./Structures/tree#tree---nonlinear-data-structure)
 - [Graph](./Structures/graph#graph---nonlinear-data-structure)
+- [HashMap](./Structures/map#hashmap---nonlinear-data-structure)
 
 </br>
 
